@@ -5,13 +5,19 @@
 }
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 
+
+
+    
 body {
     font-family: 'DM Sans', sans-serif;
     line-height: 1.6;
     color: #000;
     background: #fff;
     padding: 20px;
+    z-index: 999;
 }
+
+
 
 .ellipse {
     width: min(63vw, 63vh);
@@ -30,18 +36,73 @@ body {
 .ellipse svg text {
     fill: #000;
 }
-
+.clickable-text:hover *{
+    text-decoration: underline;
+}
 .container {
-    max-width: 600px;
+    max-width: 800px;
     margin: 0 auto;
+
+}
 }
 
 h1 {
     margin-bottom: 20px;
 }
 
+
+li::marker {
+    content: "✝";
+  }
 .expandable-section {
     margin-bottom: 15px;
+}
+
+.expandable-table-group {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.expandable-table-row {
+    display: table-row;
+}
+
+.expandable-table-row .clickable-text {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.expandable-table-row .clickable-text > table {
+    flex: 1;
+    width: 0;
+    margin: 0;
+    table-layout: fixed;
+}
+
+.expandable-table-row .clickable-text table td:first-child {
+    width: 10%;
+}
+
+.expandable-table-row .clickable-text table td:nth-child(2) {
+    width: 50%;
+    text-align: left;
+}
+
+.expandable-table-row .clickable-text table td:nth-child(3) {
+    width: 30%;
+    text-align: right;
+}
+
+.expandable-table-row .clickable-text table td {
+
+    border: none;
+}
+
+.expandable-table-row .toggle-indicator {
+    margin-left: 10px;
+    white-space: nowrap;
 }
 
 .clickable-text {
@@ -52,7 +113,7 @@ h1 {
 
 .toggle-indicator {
     font-weight: bold;
-    margin-right: 5px;
+    margin-left: 5px;
 }
 
 .expandable-content {
@@ -86,11 +147,7 @@ h1 {
     margin-bottom: 0.5em;
 }
 
-.markdown-content ul,
-.markdown-content ol {
-    margin-left: 1.5em;
-    margin-bottom: 1em;
-}
+
 
 .markdown-content a {
     color: inherit;
@@ -106,4 +163,49 @@ h1 {
 
 .markdown-content img:only-child {
     margin: 1em auto;
+}
+
+.markdown-content table {
+    width: 100%;
+    border-collapse: collapse;
+
+}
+
+.markdown-content table th,
+.markdown-content table td {
+    padding: 0;
+    border: none;
+    text-align: left;
+}
+
+.markdown-content table th {
+    font-weight: normal;
+    background-color: transparent;
+}
+
+/* Hide empty header rows */
+.markdown-content table thead tr:first-child th:empty,
+.markdown-content table thead tr:first-child th:only-child:empty,
+.markdown-content table tr:first-child td:empty ~ td,
+.markdown-content table tr:first-child th:empty ~ th {
+    display: none;
+}
+
+/* Also hide if header only contains separator characters or whitespace */
+.markdown-content table tr:first-child td,
+.markdown-content table tr:first-child th {
+    word-spacing: 0;
+}
+
+.markdown-content table tr:first-child td:contains(":-"),
+.markdown-content table tr:first-child th:contains(":-") {
+    display: none;
+}
+
+.markdown-content table td {
+
+}
+
+.markdown-content table tr:last-child td {
+    border-bottom: none;
 }

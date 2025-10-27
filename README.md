@@ -1,15 +1,6 @@
 # Lynn Avery Portfolio
 
-A portfolio website built with HTML, CSS, and JavaScript, with content managed through Markdown.
-
-## Setup
-
-1. Clone this repository
-2. Run a local server:
-   ```bash
-   python3 -m http.server 8000
-   ```
-3. Open http://localhost:8000 in your browser
+A portfolio website built with HTML, CSS, and JavaScript, with content managed through Markdown, then converted using Markd.
 
 ## Content Management
 
@@ -26,4 +17,6 @@ Use the following format for collapsible content:
 Section Title
 Content goes here. Can include **bold**, *italic*, [links](url), and images.
 [[/expandable]]
+
+For line breaks, use double space then enter. The rest of formatting follows typical markup syntax
 ```

@@ -91,6 +91,12 @@ document.addEventListener('DOMContentLoaded', function() {
  */
 async function loadMarkdownContent() {
     try {
+        // Configure marked to enable tables
+        marked.use({
+            breaks: true,
+            gfm: true
+        });
+        
         const response = await fetch('content.md');
         if (!response.ok) throw new Error('Failed to load markdown content');
         let markdownText = await response.text();
@@ -107,12 +113,27 @@ async function loadMarkdownContent() {
             const title = lines[0].trim();
             const body = lines.slice(1).join('\n').trim();
             
+            // Check if the title is a table row (starts and ends with |)
+            const isTableRow = title.startsWith('|') && title.endsWith('|');
+            
+            let titleHtml;
+            if (isTableRow) {
+                // Parse as a table row
+                const cells = title.split('|').filter(cell => cell.trim() !== '').map(cell => cell.trim());
+                titleHtml = cells.map(cell => `<td>${marked.parseInline(cell)}</td>`).join('');
+            } else {
+                // Parse as regular markdown
+                titleHtml = marked.parseInline(title);
+            }
+            
             // Parse the body as markdown to handle images and links
             const bodyHtml = marked.parse(body);
             
-            const html = `<div class="expandable-section">
+            const expandableClass = isTableRow ? 'expandable-section expandable-table-row' : 'expandable-section';
+            
+            const html = `<div class="${expandableClass}">
                 <span class="clickable-text" onclick="toggleExpand(this)">
-                    ${title}<span class="toggle-indicator">+</span>
+                    ${isTableRow ? `<table><tr>${titleHtml}</tr></table>` : titleHtml}<span class="toggle-indicator">+</span>
                 </span>
                 <div class="expandable-content">
                     ${bodyHtml}
@@ -136,6 +157,65 @@ async function loadMarkdownContent() {
         const mainContent = document.getElementById('main-content');
         if (mainContent) {
             mainContent.innerHTML = htmlContent;
+            
+            // Hide empty table header rows (separator rows like | :- | :- |)
+            const tables = mainContent.querySelectorAll('table');
+            tables.forEach(table => {
+                const firstRow = table.querySelector('tr');
+                if (firstRow) {
+                    const cells = firstRow.querySelectorAll('th, td');
+                    let isEmptyHeader = true;
+                    cells.forEach(cell => {
+                        const text = cell.textContent.trim();
+                        // Check if cell is empty or only contains separator characters
+                        if (text && !/^[\s|:-]+$/.test(text)) {
+                            isEmptyHeader = false;
+                        }
+                    });
+                    if (isEmptyHeader) {
+                        firstRow.style.display = 'none';
+                    }
+                }
+            });
+            
+            // Wrap consecutive expandable-table-row sections in a container for column alignment
+            const tableRows = Array.from(mainContent.querySelectorAll('.expandable-table-row'));
+            if (tableRows.length > 0) {
+                let currentGroup = [];
+                let currentWrapper = null;
+                
+                const createWrapper = () => {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'expandable-table-group';
+                    return wrapper;
+                };
+                
+                tableRows.forEach((row, index) => {
+                    const prevRow = index > 0 ? tableRows[index - 1] : null;
+                    const nextRow = index < tableRows.length - 1 ? tableRows[index + 1] : null;
+                    
+                    // Check if row is consecutive with previous
+                    const isConsecutive = prevRow && row.previousElementSibling === prevRow.nextElementSibling;
+                    
+                    if (!isConsecutive) {
+                        // Start a new group
+                        if (currentWrapper && currentGroup.length > 0) {
+                            currentGroup.forEach(el => currentWrapper.appendChild(el));
+                            currentWrapper = null;
+                            currentGroup = [];
+                        }
+                        currentWrapper = createWrapper();
+                        row.parentElement.insertBefore(currentWrapper, row);
+                    }
+                    
+                    currentGroup.push(row);
+                });
+                
+                // Add remaining group
+                if (currentWrapper && currentGroup.length > 0) {
+                    currentGroup.forEach(el => currentWrapper.appendChild(el));
+                }
+            }
         }
     } catch (error) {
         console.error('Error loading markdown:', error);
