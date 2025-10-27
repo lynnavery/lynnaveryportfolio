@@ -15,6 +15,8 @@ body {
 
 .ellipse {
     width: min(63vw, 63vh);
+    height: min(63vw, 33vh);
+    aspect-ratio: 4/7;
     margin: 0 auto;
 }
 
@@ -22,6 +24,7 @@ body {
     transform: rotate(0deg);
     width: 100%;
     height: 100%;
+    display: block;
 }
 
 .ellipse svg text {
@@ -55,6 +58,7 @@ h1 {
 .expandable-content {
     max-height: 0;
     overflow: hidden;
+    color: #999999;
 }
 
 .expandable-content.expanded {
@@ -91,4 +95,15 @@ h1 {
 .markdown-content a {
     color: inherit;
     text-decoration: underline;
+}
+
+.markdown-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 1em 0;
+}
+
+.markdown-content img:only-child {
+    margin: 1em auto;
 }

@@ -27,11 +27,3 @@ Section Title
 Content goes here. Can include **bold**, *italic*, [links](url), and images.
 [[/expandable]]
 ```
-
-## Deployment
-
-This site can be deployed to:
-- GitHub Pages
-- Netlify
-- Vercel
-- Any static hosting service

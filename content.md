@@ -10,11 +10,14 @@ She has shared the stage with a wide range of artists from Laraaji and Daniel La
 [[expandable]]
 Pink Must - "Pink Must" [LP 2025] 15 Love Records
 Available on [Bandcamp](https://pinkmust.bandcamp.com) and streaming platforms.
+![Album cover](img/pinkmust-pinkmust.png)
+Featured in [Pitchfork](https://pitchfork.com).
 [[/expandable]]
 
 [[expandable]]
 Lynn Avery & Cole Pulice - "Phantasy & Reality" [LP 2024] Moon Glyph Records
-Listen on [Bandcamp](https://lynnaverycolepulice.bandcamp.com). Featured in [Pitchfork](https://pitchfork.com).
+Listen on [Bandcamp](https://lynnaverycolepulice.bandcamp.com). 
+Featured in [Pitchfork](https://pitchfork.com).
 [[/expandable]]
 
 [[expandable]]
@@ -31,12 +34,14 @@ Listen on [Bandcamp](https://signalsquest.bandcamp.com). Reviewed in [The Quietu
 [[expandable]]
 Lynn Avery & Cole Pulice - To Live in Space & Time [LP 2021] Moon Glyph Records
 Available on [Bandcamp](https://lynnaverycolepulice.bandcamp.com).
+Featured in [Pitchfork](https://pitchfork.com).
 [[/expandable]]
 
 [[expandable]]
 Iceblink - Carpet Cocoon [LP 2020] Moon Glyph Records
 ![Album cover](https://via.placeholder.com/300x300?text=Carpet+Cocoon)
 Stream on [Bandcamp](https://iceblink.bandcamp.com) or visit [Website](https://iceblink.com)
+Featured in [Pitchfork](https://pitchfork.com).
 [[/expandable]]
 
 ---
@@ -59,18 +64,18 @@ TRANSA at Electirc place
 Past
 [[expandable]]
 2025
-Photos from the performance: ![Performance photo](https://via.placeholder.com/400x300?text=Pioneer+Works)
-Read the review in [Pitchfork](https://pitchfork.com)
+9/27 Knockdown Center, Queens NY
+9/12 The Owl, Brooklyn NY
 [[/expandable]]
 
 [[expandable]]
 2024
-Check out the full set on [YouTube](https://youtube.com)
+Blah
 [[/expandable]]
 
 [[expandable]]
 2023
-In collaboration with Cole Pulice. Photos available on [Instagram](https://instagram.com/lynn_avery)
+Blah blah
 [[/expandable]]
 [[expandable]]
 2022
