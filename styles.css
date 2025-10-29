@@ -13,7 +13,6 @@ body {
     line-height: 1.6;
     color: #000;
     background: #fff;
-    padding: 20px;
     z-index: 999;
 }
 
@@ -23,7 +22,7 @@ body {
     width: min(63vw, 63vh);
     height: min(63vw, 33vh);
     aspect-ratio: 4/7;
-    margin: 0 auto;
+    margin: -20px auto;
 }
 
 .ellipse svg {
@@ -42,8 +41,28 @@ body {
 .container {
     max-width: 800px;
     margin: 0 auto;
-
 }
+
+.site-nav {
+    display: flex;
+    gap: 1em;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    flex-wrap: wrap;
+}
+
+.site-nav a {
+    color: #000;
+    text-decoration: none;
+    text-transform: lowercase;
+}
+
+.site-nav a:hover {
+    text-decoration: underline;
+}
+
+.site-nav a.active {
+    font-weight: bold;
 }
 
 h1 {
@@ -108,7 +127,7 @@ li::marker {
 .clickable-text {
     cursor: pointer;
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 1em;
 }
 
 .toggle-indicator {
@@ -137,7 +156,7 @@ li::marker {
 }
 
 .markdown-content p {
-    margin-bottom: 1em;
+    margin-bottom: 2em;
 }
 
 .markdown-content h1,
@@ -155,10 +174,11 @@ li::marker {
 }
 
 .markdown-content img {
-    max-width: 100%;
+    max-width: 30%;
     height: auto;
     display: block;
-    margin: 1em 0;
+    margin: 1em 1em 1em 0em;
+  float: left;
 }
 
 .markdown-content img:only-child {
@@ -170,7 +190,9 @@ li::marker {
     border-collapse: collapse;
 
 }
-
+.markdown-content table td:nth-child(3) {
+    text-align: right;
+}
 .markdown-content table th,
 .markdown-content table td {
     padding: 0;
@@ -202,10 +224,11 @@ li::marker {
     display: none;
 }
 
-.markdown-content table td {
-
+hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 2em 0;
 }
-
 .markdown-content table tr:last-child td {
     border-bottom: none;
 }

@@ -83,13 +83,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  loadMarkdownContent();
+  // Get the markdown file to load from the script tag's data attribute
+  const scriptTag = document.querySelector('script[data-content]');
+  const contentFile = scriptTag ? scriptTag.getAttribute('data-content') : 'content.md';
+  loadMarkdownContent(contentFile);
 });
 
 /**
  * Load and render markdown content
  */
-async function loadMarkdownContent() {
+async function loadMarkdownContent(file = 'content.md') {
     try {
         // Configure marked to enable tables
         marked.use({
@@ -97,7 +100,7 @@ async function loadMarkdownContent() {
             gfm: true
         });
         
-        const response = await fetch('content.md');
+        const response = await fetch(file);
         if (!response.ok) throw new Error('Failed to load markdown content');
         let markdownText = await response.text();
         
