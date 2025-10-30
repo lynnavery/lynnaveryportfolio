@@ -2,9 +2,11 @@ Upcoming Events:
 
 | | | |
 | :------- | :------: |  ---: |
-| 10/6/25 | Lynn Avery | [TRANSA at Powerhouse, Brooklyn NY](https://festival.powerhousearts.org/festival-performances/transa) | 
+| 12/6/25 | Lynn Avery | [TRANSA at Powerhouse, Brooklyn NY](https://festival.powerhousearts.org/festival-performances/transa) | 
 | 2/7/26 | Pink Must  | [OOAM Fest, Baden, CH](https://ooam.ch/programm/)  |
 | TBA | Pink Must | Prague |  
+| TBA | Pink Must | Berlin |
+| TBA | Pink Must | Copenhagen |
 
 ---
 Past Events:
