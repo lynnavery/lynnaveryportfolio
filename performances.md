@@ -15,7 +15,8 @@ Past Events:
 | 9/27/25 | Pink Must, feeble little horse | Knockdown Center, Queens NY |
 | 9/12/25 | Iceblink, Matt Bachman | The Owl, Brooklyn NY |
 | 9/7/25 | Iceblink, Hour, Matt Bachman, Terracotta | Philadelphia PA |
-| 9/4-9/6/25 | Iceblink | Hopscotch Festival, Raleigh NC |
+| 9/6/25 | Iceblink, Tara Clerkin Trio, Claire Rousay, Jeremiah Chu | Hopscotch, Raleigh NC |
+| 9/4-9/6/25 | Iceblink, day shows | Hopscotch Festival, Raleigh NC |
 | 9/3/25 | Iceblink, Crying Laughing | Baltimore MD |
 | 8/20/25 | Pink Must, Still House Plants | NC101, Manhattan NY |
 | 6/7/25 | Lynn Avery & Cole Pulice, Wendy Eisenberg | The Lab, San Francisco CA |
