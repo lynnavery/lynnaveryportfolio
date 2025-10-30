@@ -4,6 +4,14 @@
  * 
  * @param {HTMLElement} element - The element that triggers the toggle
  */
+// Persisted animation start time so animation progress continues across page loads
+const __ANIM_STORAGE_KEY = 'animationStartTs';
+let __animStartTs = Number(sessionStorage.getItem(__ANIM_STORAGE_KEY));
+if (!__animStartTs) {
+    __animStartTs = Date.now();
+    sessionStorage.setItem(__ANIM_STORAGE_KEY, String(__animStartTs));
+}
+const __elapsedMsSinceStart = Date.now() - __animStartTs;
 function toggleExpand(element) {
     // Find the expandable content associated with this element
     const section = element.closest('.expandable-section');
@@ -56,16 +64,22 @@ const createAnimation = ({
       gsap.set(target.querySelectorAll("textPath"), textProperties);
     }
   
-    gsap.fromTo(
+    const tweenA = gsap.fromTo(
       target.querySelectorAll("textPath")[0],
       { attr: { startOffset: "0%" } },
       { attr: { startOffset: reversed ? "-100%" : "100%" }, ...props }
     );
-    gsap.fromTo(
+    const tweenB = gsap.fromTo(
       target.querySelectorAll("textPath")[1],
       { attr: { startOffset: reversed ? "100%" : "-100%" } },
       { attr: { startOffset: "0%" }, ...props }
     );
+
+    // Keep progress continuous across page loads using persisted start time
+    const elapsedSeconds = __elapsedMsSinceStart / 1000;
+    const baseProgress = ((elapsedSeconds % duration) / duration + 1) % 1; // safe modulo
+    tweenA.progress(baseProgress);
+    tweenB.progress(baseProgress);
   };
   
 document.addEventListener('DOMContentLoaded', function() {
