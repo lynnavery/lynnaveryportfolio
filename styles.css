@@ -19,8 +19,8 @@ body {
 
 
 .ellipse {
-    width: min(63vw, 63vh);
-    height: min(63vw, 33vh);
+    width: min(calc(63vw - 80px), calc(63vh - 80px));
+    height: min(calc(63vw - 80px), calc(33vh - 80px));
     aspect-ratio: 4/7;
     margin: -20px auto;
 }
@@ -41,6 +41,8 @@ body {
 .container {
     max-width: 800px;
     margin: 0 auto;
+    padding-left: max(10px, 1vw);
+    padding-right: max(10px, 1vw);
 }
 
 .site-nav {

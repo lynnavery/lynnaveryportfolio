@@ -2,14 +2,20 @@ Upcoming Events:
 
 | | | |
 | :------- | :------: |  ---: |
-| 12/6/25 | Lynn Avery (TRANSA Ensemble) | [Powerhouse, Brooklyn NY](https://festival.powerhousearts.org/festival-performances/transa) | 
-| 2/7/26 | Pink Must  | [OOAM Fest, Baden, CH](https://ooam.ch/programm/)  |
-| Winter 2026 | Pink Must | Europe |
+| Febuary 2026 | Pink Must Europe Tour: | |
+| 2/7/26 |  OOAM Fest | [Baden, CH](https://ooam.ch/programm/)  |
+| | w/ Fine | Vienna, AU |
+| TBA | w/ | Graz, AU |
+| TBA | w/ | Prague, CZ |  
+| TBA | w/ | Berlin, DE |
+| TBA | w/ Jordan Playfair | Copenhagen |
+| TBA | w/ | Amsterdam |
 
 ---
 Past Events:
 | | |  |
 |:- | :- | --: |
+| 12/6/25 | Lynn Avery | [TRANSA at Powerhouse, Brooklyn NY](https://festival.powerhousearts.org/festival-performances/transa) | 
 | 9/27/25 | Pink Must, feeble little horse | Knockdown Center, Queens NY |
 | 9/12/25 | Iceblink, Matt Bachman | The Owl, Brooklyn NY |
 | 9/7/25 | Iceblink, Hour, Matt Bachman, Terracotta | Philadelphia PA |
