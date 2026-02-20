@@ -2,19 +2,21 @@ Upcoming Events:
 
 | | | |
 | :------- | :------: |  ---: |
-| Febuary 2026 | Pink Must Europe Tour: | |
-| 2/7/26 |  OOAM Fest | [Baden, CH](https://ooam.ch/programm/)  |
-| | w/ Fine | Vienna, AU |
-| TBA | w/ | Graz, AU |
-| TBA | w/ | Prague, CZ |  
-| TBA | w/ | Berlin, DE |
-| TBA | w/ Jordan Playfair | Copenhagen |
-| TBA | w/ | Amsterdam |
+| 2/24/26 | Pink Must w/ e.r visit | Purgatory, Brooklyn, NY |
+| 4/17/26 | Iceblink | Durham, NC |
+
 
 ---
 Past Events:
 | | |  |
 |:- | :- | --: |
+| 2/16/26 | Pink Must | Amsterdam, NE |
+| 2/15/26 | Pink Must w/ Jordan Playfair, TLF Trio | Copenhagen, DK |
+| 2/13/26 | Pink Must | Punctum, Prague, CZ |  
+| 2/12/26 | Pink Must | 8mm, Berlin, DE |
+| 2/10/26 | Pink Must | Graz, AU |
+| 2/8/26 | Pink Must w/ Fine | Vienna, AU |
+| 2/7/26 | Pink Must @ OOAM Fest | [Baden, CH](https://ooam.ch/programm/)  |
 | 12/6/25 | Lynn Avery | [TRANSA at Powerhouse, Brooklyn NY](https://festival.powerhousearts.org/festival-performances/transa) | 
 | 9/27/25 | Pink Must, feeble little horse | Knockdown Center, Queens NY |
 | 9/12/25 | Iceblink, Matt Bachman | The Owl, Brooklyn NY |
