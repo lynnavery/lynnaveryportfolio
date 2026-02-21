@@ -6,17 +6,19 @@ A portfolio website built with HTML, CSS, and JavaScript, with content managed t
 
 Edit `content.md` to update the portfolio content. The file uses:
 - Standard Markdown syntax
-- Custom expandable sections using `[[expandable]]` tags
+- Custom expandable sections using `[[details]]` and `[[summary]]` tags (convert to HTML `<details>` / `<summary>`)
 
 ### Expandable Sections
 
 Use the following format for collapsible content:
 
 ```markdown
-[[expandable]]
+[[details]]
+[[summary]]
 Section Title
+[[/summary]]
 Content goes here. Can include **bold**, *italic*, [links](url), and images.
-[[/expandable]]
+[[/details]]
 
 For line breaks, use double space then enter. The rest of formatting follows typical markup syntax
 ```

@@ -1,9 +1,3 @@
-/**
- * Toggle Expand Function
- * A reusable function that expands/collapses content when clicked.
- * 
- * @param {HTMLElement} element - The element that triggers the toggle
- */
 // Persisted animation start time so animation progress continues across page loads
 const __ANIM_STORAGE_KEY = 'animationStartTs';
 let __animStartTs = Number(sessionStorage.getItem(__ANIM_STORAGE_KEY));
@@ -12,25 +6,6 @@ if (!__animStartTs) {
     sessionStorage.setItem(__ANIM_STORAGE_KEY, String(__animStartTs));
 }
 const __elapsedMsSinceStart = Date.now() - __animStartTs;
-function toggleExpand(element) {
-    // Find the expandable content associated with this element
-    const section = element.closest('.expandable-section');
-    const content = section.querySelector('.expandable-content');
-    const indicator = element.querySelector('.toggle-indicator');
-    
-    // Update the +/- indicator and toggle
-    if (content.classList.contains('expanded')) {
-        // Collapsing - remove transition for instant collapse
-        content.style.transition = 'none';
-        content.classList.remove('expanded');
-        indicator.textContent = '+';
-    } else {
-        // Expanding - add transition for smooth expand
-        content.style.transition = '';
-        content.classList.add('expanded');
-        indicator.textContent = '-';
-    }
-}
 
 /**
  * 
@@ -90,10 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
       reversed: true,
       target: ellipseSvg,
       text: "lynn avery",
-      // textProperties: { fontSize: "19.5px", letterSpacing: "-0.47px" }
-      // textProperties: { fontSize: "17px" }
-      // Apparently iPhone decides 17px is not 17px 🙃
-      textProperties: { fontSize: /iPhone/.test(navigator.userAgent) ? "19px" : "17px" }
+      textProperties: { fontSize: "2em" }
     });
   }
   
@@ -118,57 +90,40 @@ async function loadMarkdownContent(file = 'content.md') {
         if (!response.ok) throw new Error('Failed to load markdown content');
         let markdownText = await response.text();
         
-        // Process expandable blocks
-        const expandedBlocks = [];
-        let blockIndex = 0;
+        // Process [[details]] / [[summary]] blocks → <details> / <summary> HTML
+        // Syntax: [[details]] [[summary]]...[[/summary]] body... [[/details]]
+        const blockRegex = /\[\[details\]\]\s*\n\[\[summary\]\]\s*\n((?:.|\n)*?)\[\[\/summary\]\]\s*\n((?:.|\n)*?)\[\[\/details\]\]/g;
         
-        // Match expandable blocks
-        const blockRegex = /\[\[expandable\]\]\s*\n((?:.|\n)*?)\[\[\/expandable\]\]/g;
-        
-        markdownText = markdownText.replace(blockRegex, (match, content) => {
-            const lines = content.trim().split('\n');
-            const title = lines[0].trim();
-            const body = lines.slice(1).join('\n').trim();
+        markdownText = markdownText.replace(blockRegex, (match, summaryContent, bodyContent) => {
+            const summaryTrimmed = summaryContent.trim();
+            const title = summaryTrimmed.split('\n')[0].trim();
+            const body = bodyContent.trim();
             
-            // Check if the title is a table row (starts and ends with |)
+            // Check if the summary line is a table row (starts and ends with |)
             const isTableRow = title.startsWith('|') && title.endsWith('|');
             
-            let titleHtml;
+            let summaryHtml;
             if (isTableRow) {
-                // Parse as a table row
                 const cells = title.split('|').filter(cell => cell.trim() !== '').map(cell => cell.trim());
-                titleHtml = cells.map(cell => `<td>${marked.parseInline(cell)}</td>`).join('');
+                summaryHtml = cells.map(cell => `<td>${marked.parseInline(cell)}</td>`).join('');
             } else {
-                // Parse as regular markdown
-                titleHtml = marked.parseInline(title);
+                summaryHtml = marked.parseInline(title);
             }
             
-            // Parse the body as markdown to handle images and links
             const bodyHtml = marked.parse(body);
-            
             const expandableClass = isTableRow ? 'expandable-section expandable-table-row' : 'expandable-section';
             
-            const html = `<div class="${expandableClass}">
-                <span class="clickable-text" onclick="toggleExpand(this)">
-                    ${isTableRow ? `<table><tr>${titleHtml}</tr></table>` : titleHtml}<span class="toggle-indicator">+</span>
-                </span>
-                <div class="expandable-content">
-                    ${bodyHtml}
-                </div>
-            </div>`;
-            
-            expandedBlocks.push(html);
-            // Use HTML comment as placeholder that markdown won't touch
-            return `<!-- BLOCK_${blockIndex++} -->`;
+            const html = `<details class="${expandableClass}">
+<summary class="expandable-summary">${isTableRow ? `<table><tr>${summaryHtml}</tr></table>` : summaryHtml}</summary>
+<div class="expandable-content">
+${bodyHtml}
+</div>
+</details>`;
+            return '\n\n' + html + '\n\n';
         });
         
-        // Render the remaining markdown
+        // Render the full markdown (expandable blocks are already <details> HTML)
         let htmlContent = marked.parse(markdownText);
-        
-        // Replace HTML comment placeholders with actual HTML
-        for (let i = 0; i < expandedBlocks.length; i++) {
-            htmlContent = htmlContent.replace(`<!-- BLOCK_${i} -->`, expandedBlocks[i]);
-        }
         
         // Insert into the main content area
         const mainContent = document.getElementById('main-content');

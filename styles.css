@@ -35,7 +35,7 @@ body {
 .ellipse svg text {
     fill: #000;
 }
-.clickable-text:hover *{
+.expandable-summary:hover * {
     text-decoration: underline;
 }
 .container {
@@ -46,9 +46,10 @@ body {
 .site-nav {
     display: flex;
     gap: 1em;
-    margin-bottom: 2em;
-    margin-top: 2em;
+    margin-bottom: 0em;
+    margin-top: 0em;
     flex-wrap: wrap;
+    font-size: 2em;
 }
 
 .site-nav a {
@@ -71,10 +72,32 @@ h1 {
 
 
 li::marker {
-    content: "✝";
+    content: "♣ ";
   }
-.expandable-section {
+details.expandable-section {
     margin-bottom: 15px;
+}
+
+/* Hide default details marker and use +/- instead */
+details.expandable-section summary {
+    list-style: none;
+    cursor: pointer;
+    display: block;
+    margin-bottom: 1em;
+}
+details.expandable-section summary::-webkit-details-marker {
+    display: none;
+}
+details.expandable-section summary::marker {
+    display: none;
+}
+details.expandable-section summary::before {
+    content: "♣";
+    font-weight: bold;
+    margin-right: 5px;
+}
+details.expandable-section[open] summary::before {
+    content: "♧";
 }
 
 .expandable-table-group {
@@ -87,63 +110,46 @@ li::marker {
     display: table-row;
 }
 
-.expandable-table-row .clickable-text {
+.expandable-table-row .expandable-summary {
     display: flex;
     width: 100%;
     align-items: center;
+    margin-bottom: 0;
 }
 
-.expandable-table-row .clickable-text > table {
+.expandable-table-row .expandable-summary > table {
     flex: 1;
     width: 0;
     margin: 0;
     table-layout: fixed;
 }
 
-.expandable-table-row .clickable-text table td:first-child {
+.expandable-table-row .expandable-summary table td:first-child {
     width: 10%;
 }
 
-.expandable-table-row .clickable-text table td:nth-child(2) {
+.expandable-table-row .expandable-summary table td:nth-child(2) {
     width: 50%;
     text-align: left;
 }
 
-.expandable-table-row .clickable-text table td:nth-child(3) {
+.expandable-table-row .expandable-summary table td:nth-child(3) {
     width: 30%;
     text-align: right;
 }
 
-.expandable-table-row .clickable-text table td {
-
+.expandable-table-row .expandable-summary table td {
     border: none;
 }
 
-.expandable-table-row .toggle-indicator {
+.expandable-table-row summary::before {
     margin-left: 10px;
     white-space: nowrap;
 }
 
-.clickable-text {
-    cursor: pointer;
-    display: block;
-    margin-bottom: 1em;
-}
-
-.toggle-indicator {
-    font-weight: bold;
-    margin-left: 5px;
-}
-
 .expandable-content {
-    max-height: 0;
-    overflow: hidden;
     color: #999999;
-}
-
-.expandable-content.expanded {
-    max-height: 1000px;
-    transition: max-height 0.3s ease;
+    margin-left: 20px;
 }
 
 .expandable-content p {

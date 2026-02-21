@@ -29,28 +29,33 @@ Past Events:
 
 ---
 
-[[expandable]]
+[[details]]
+[[summary]]
 2024
+[[/summary]]
 | | |  |
 |:- | :- | --: |
 | 11/14/24 | Iceblink, Wendy Eisenberg | Union Pool, Brooklyn NY |
 | 9/12/24 | Iceblink | Elsewhere, Brooklyn NY with Lomelda |
 | 7/26/24 | Lynn Avery, MoreEaze, Lia Kohl (trio) | Cassette, Brooklyn NY |
 | 5/11/24 | Signal Quest, Daniel Lanois | Grace Cathedral, San Fransisco CA |
+[[/details]]
 
-[[/expandable]]
-
-[[expandable]]
+[[details]]
+[[summary]]
 2023
+[[/summary]]
 | | |  |
 |:- | :- | --: |
 | 8/13/23 | Iceblink | Pioneer Works, Brooklyn NY for Second Sundays|
-[[/expandable]]
-[[expandable]]
+[[/details]]
+[[details]]
+[[summary]]
 Earlier
+[[/summary]]
 | | |  |
 |:- | :- | --: |
 | --/--/20 | Iceblink | ["Healer" (Live on Radio K)](https://www.youtube.com/watch?v=d-7E0r07JtI) |
 | 10/28/18 | Iceblink | Cedar Cultural Center |
-[[/expandable]]
+[[/details]]
 

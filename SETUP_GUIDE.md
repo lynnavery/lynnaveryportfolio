@@ -87,11 +87,13 @@ Line two
 You can create collapsible content blocks that users can click to expand/collapse.
 
 ```markdown
-[[expandable]]
+[[details]]
+[[summary]]
 Click Me to Expand
+[[/summary]]
 This content is hidden by default and expands when clicked.
 You can use **bold**, *italic*, [links](url), and other markdown here.
-[[/expandable]]
+[[/details]]
 ```
 
 **Visual Result:**
@@ -286,7 +288,7 @@ The site automatically adapts to mobile, tablet, and desktop screens. The CSS us
 - Try refreshing the page
 
 **Expandable sections not working?**
-- Make sure the syntax is exactly: `[[expandable]]` ... `[[/expandable]]`
+- Make sure the syntax is exactly: `[[details]]` with `[[summary]]` ... `[[/summary]]` for the heading and the rest until `[[/details]]` for the body
 - Check browser console for JavaScript errors
 
 ## Questions or Issues?
