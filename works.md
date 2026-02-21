@@ -2,8 +2,9 @@
 [[summary]]
 |  2025 | Pink Must - *Pink Must* | 15 Love Records |
 [[/summary]]
-[Bandcamp](https://pinkmust.bandcamp.com) ✤ [Boomkat](https://boomkat.com/products/morphe-sun)
 ![Album cover](img/pinkmust-pinkmust.png)
+Listen: [Bandcamp](https://pinkmust.bandcamp.com) ✤ [Boomkat](https://boomkat.com/products/morphe-sun)
+Written, performed, produced and mixed by Mari 'More Eaze' Rubio and Lynn Avery 
 Press: [Pitchfork](https://pitchfork.com)
 [[/details]]
 

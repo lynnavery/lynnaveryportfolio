@@ -14,6 +14,7 @@ body {
     color: #000;
     background: #fff;
     z-index: 999;
+    padding: 5px;
 }
 
 
@@ -140,6 +141,7 @@ details.expandable-section[open] summary::before {
 
 .expandable-table-row .expandable-summary table td {
     border: none;
+    vertical-align: top;
 }
 
 .expandable-table-row summary::before {
@@ -204,6 +206,7 @@ details.expandable-section[open] summary::before {
     padding: 0;
     border: none;
     text-align: left;
+    vertical-align: top;
 }
 
 .markdown-content table th {
@@ -237,4 +240,19 @@ hr {
 }
 .markdown-content table tr:last-child td {
     border-bottom: none;
+}
+
+/* Mobile / responsive */
+@media (max-width: 768px) {
+    .site-nav {
+        font-size: 1.25em;
+    }
+
+    /* Album art full width, no margins on works page */
+    .markdown-content .expandable-content img {
+        max-width: 100%;
+        width: 100%;
+        margin: 0;
+        float: none;
+    }
 }

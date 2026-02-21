@@ -9,4 +9,4 @@ Currently:
 [ Lot Radio - long in the arms, with Pink Must - every 2nd Sunday @ 1pm et ](https://www.thelotradio.com/shows/long-in-the-arms-with-pink-must)
 2/24/26 — Pink Must w/ e.r visit, Purgatory, Brooklyn NY  
 
-[(more events...)](performances.html)
+[(more events...)](live.html)

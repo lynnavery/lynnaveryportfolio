@@ -130,6 +130,11 @@ ${bodyHtml}
         if (mainContent) {
             mainContent.innerHTML = htmlContent;
             
+            // On the works (album) page, expand all details by default
+            if (file === 'works.md') {
+                mainContent.querySelectorAll('details').forEach(d => d.setAttribute('open', ''));
+            }
+            
             // Hide empty table header rows (separator rows like | :- | :- |)
             const tables = mainContent.querySelectorAll('table');
             tables.forEach(table => {

@@ -32,7 +32,7 @@ Edit the **navigation menu** that appears on every page. Find this in each HTML 
 <nav class="site-nav">
     <a href="index.html" class="active">bio</a>
     <a href="works.html">works</a>
-    <a href="performances.html">performances</a>
+    <a href="live.html">live</a>
     <a href="press.html">press</a>
     <a href="contact.html">contact</a>
 </nav>
@@ -148,12 +148,12 @@ Find fonts at [Google Fonts](https://fonts.google.com/)
 your-portfolio/
 ├── index.html              # Bio/About page
 ├── works.html              # Portfolio/Works page
-├── performances.html       # Performances/Events page
+├── live.html               # Live/Events page
 ├── press.html              # Press/Media page
 ├── contact.html            # Contact page
 ├── bio.md                  # Content for bio page
 ├── works.md                # Content for works page
-├── performances.md         # Content for performances page
+├── live.md                 # Content for live page
 ├── press.md                # Content for press page
 ├── contact.md              # Content for contact page
 ├── styles.css              # All styling
@@ -225,7 +225,7 @@ If you want to add a new page (e.g., "Shop"):
            <nav class="site-nav">
                <a href="index.html">bio</a>
                <a href="works.html">works</a>
-               <a href="performances.html">performances</a>
+               <a href="live.html">live</a>
                <a href="press.html">press</a>
                <a href="shop.html" class="active">shop</a>
                <a href="contact.html">contact</a>
