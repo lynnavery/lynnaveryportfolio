@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script>
+      (function(){ var n=function(){}; var i=function(s){ return s!=null?String(s):''; }; window.marked=window.marked||{ use:n, parse:i, parseInline:i, setOptions:n, getDefaults:function(){ return {}; } }; })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
@@ -32,20 +35,6 @@
         <div id="main-content" class="page-content"></div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <!-- Stub so old/cached code never throws on marked; we use content/*.html only -->
-    <script>
-      (function() {
-        var noop = function() {};
-        var identity = function(s) { return s != null ? String(s) : ''; };
-        window.marked = window.marked || {
-          use: noop,
-          parse: identity,
-          parseInline: identity,
-          setOptions: noop,
-          getDefaults: function() { return {}; }
-        };
-      })();
-    </script>
-    <script src="script.js"></script>
+    <script src="script.js?v=1"></script>
 </body>
 </html>

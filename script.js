@@ -7,6 +7,15 @@ if (!__animStartTs) {
 }
 const __elapsedMsSinceStart = Date.now() - __animStartTs;
 
+// Cache bust: read ?v= from our own script src (set in index.html); use for content fetches
+const __CACHE_VERSION = (function() {
+  try {
+    var s = document.currentScript && document.currentScript.src;
+    var m = s && s.match(/[?&]v=([^&]+)/);
+    return m ? m[1] : String(Date.now());
+  } catch (e) { return String(Date.now()); }
+})();
+
 const PAGES = { bio: 'bio', works: 'works', live: 'live', press: 'press', contact: 'contact' };
 
 /**
@@ -71,8 +80,9 @@ function setActiveNav(page) {
 
 async function loadContent(page) {
   const file = `content/${page}.html`;
+  const url = `${file}?v=${__CACHE_VERSION}`;
   try {
-    const response = await fetch(file);
+    const response = await fetch(url);
     if (!response.ok) throw new Error('Failed to load content');
     const html = await response.text();
 
