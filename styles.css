@@ -233,29 +233,29 @@ details.expandable-section[open] summary::before {
 }
 
 /* Markdown content styles */
-.markdown-content {
+.page-content {
     margin-bottom: 20px;
 }
 
-.markdown-content p {
+.page-content p {
     margin-bottom: 1em;
 }
 
-.markdown-content h1,
-.markdown-content h2,
-.markdown-content h3 {
+.page-content h1,
+.page-content h2,
+.page-content h3 {
     margin-top: 1.5em;
     margin-bottom: 0.5em;
 }
 
 
 
-.markdown-content a {
+.page-content a {
     color: inherit;
     text-decoration: underline;
 }
 
-.markdown-content img {
+.page-content img {
     max-width: 30%;
     height: auto;
     display: block;
@@ -264,53 +264,53 @@ details.expandable-section[open] summary::before {
 }
 
 /* Album layout overrides the generic img float above */
-.markdown-content .album-art img {
+.page-content .album-art img {
     max-width: 220px;
     margin: 0;
     float: none;
 }
 
-.markdown-content img:only-child {
+.page-content img:only-child {
     margin: 0em auto;
 }
 
-.markdown-content table {
+.page-content table {
     width: 100%;
     border-collapse: collapse;
 
 }
-.markdown-content table td:nth-child(3) {
+.page-content table td:nth-child(3) {
     text-align: right;
 }
-.markdown-content table th,
-.markdown-content table td {
+.page-content table th,
+.page-content table td {
     padding: 0;
     border: none;
     text-align: left;
     vertical-align: top;
 }
 
-.markdown-content table th {
+.page-content table th {
     font-weight: normal;
     background-color: transparent;
 }
 
 /* Hide empty header rows */
-.markdown-content table thead tr:first-child th:empty,
-.markdown-content table thead tr:first-child th:only-child:empty,
-.markdown-content table tr:first-child td:empty ~ td,
-.markdown-content table tr:first-child th:empty ~ th {
+.page-content table thead tr:first-child th:empty,
+.page-content table thead tr:first-child th:only-child:empty,
+.page-content table tr:first-child td:empty ~ td,
+.page-content table tr:first-child th:empty ~ th {
     display: none;
 }
 
 /* Also hide if header only contains separator characters or whitespace */
-.markdown-content table tr:first-child td,
-.markdown-content table tr:first-child th {
+.page-content table tr:first-child td,
+.page-content table tr:first-child th {
     word-spacing: 0;
 }
 
-.markdown-content table tr:first-child td:contains(":-"),
-.markdown-content table tr:first-child th:contains(":-") {
+.page-content table tr:first-child td:contains(":-"),
+.page-content table tr:first-child th:contains(":-") {
     display: none;
 }
 
@@ -321,23 +321,23 @@ hr {
 }
 
 /* Live page: image left, Upcoming Events table to the right on desktop */
-.markdown-content .upcoming-with-img {
+.page-content .upcoming-with-img {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5em;
     align-items: flex-start;
     margin-bottom: 1em;
 }
-.markdown-content .upcoming-with-img .live-upcoming-img {
+.page-content .upcoming-with-img .live-upcoming-img {
     flex: 0 0 auto;
     max-width: 24%;
     display: block;
 }
-.markdown-content .upcoming-with-img .upcoming-events {
+.page-content .upcoming-with-img .upcoming-events {
     flex: 1;
     min-width: 200px;
 }
-.markdown-content table tr:last-child td {
+.page-content table tr:last-child td {
     border-bottom: none;
 }
 
@@ -368,10 +368,10 @@ hr {
         max-width: 100%;
         width: 100%;
     }
-    .markdown-content .upcoming-with-img {
+    .page-content .upcoming-with-img {
         flex-direction: column;
     }
-    .markdown-content .upcoming-with-img .live-upcoming-img {
+    .page-content .upcoming-with-img .live-upcoming-img {
         max-width: 100%;
         width: 100%;
     }

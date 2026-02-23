@@ -153,12 +153,12 @@ In **styles.css**:
     margin-top: 2em;
 }
 
-.markdown-content {
+.page-content {
     line-height: 1.6;
 }
 ```
 
-(The main content div still uses the class `markdown-content` for styling; the content itself is HTML.)
+(The main content div uses the class `page-content` for styling.)
 
 ## Adding New Pages (Sections)
 
