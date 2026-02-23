@@ -32,9 +32,19 @@
         <div id="main-content" class="page-content"></div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <!-- Stub so old/cached code never throws "marked is not defined"; we use content/*.html only -->
+    <!-- Stub so old/cached code never throws on marked; we use content/*.html only -->
     <script>
-      window.marked = window.marked || { use: function() {}, parse: function(s) { return s || ''; } };
+      (function() {
+        var noop = function() {};
+        var identity = function(s) { return s != null ? String(s) : ''; };
+        window.marked = window.marked || {
+          use: noop,
+          parse: identity,
+          parseInline: identity,
+          setOptions: noop,
+          getDefaults: function() { return {}; }
+        };
+      })();
     </script>
     <script src="script.js"></script>
 </body>
