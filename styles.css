@@ -13,9 +13,11 @@ body {
     line-height: 1.6;
     color: #000;
     background: #fff;
+
+    background-size: cover;
     z-index: 999;
     padding: 5px;
-}
+
 
 
 
@@ -42,6 +44,7 @@ body {
 .container {
     max-width: 800px;
     margin: 0 auto;
+
 }
 
 .site-nav {
@@ -57,6 +60,17 @@ body {
     color: #000;
     text-decoration: none;
     text-transform: lowercase;
+    display: inline-block;
+    /* Reserve space for bold so active state doesn’t shift neighbors */
+}
+
+.site-nav a::before {
+    content: attr(data-text);
+    font-weight: bold;
+    display: block;
+    height: 0;
+    overflow: hidden;
+    width: max-content;
 }
 
 .site-nav a:hover {
@@ -93,12 +107,14 @@ details.expandable-section summary::marker {
     display: none;
 }
 details.expandable-section summary::before {
-    content: "♣";
+    content: "+";
     font-weight: bold;
     margin-right: 5px;
+    margin-left: -15px;
+    vertical-align: top;
 }
 details.expandable-section[open] summary::before {
-    content: "♧";
+    content: "-";
 }
 
 .expandable-table-group {
@@ -114,8 +130,9 @@ details.expandable-section[open] summary::before {
 .expandable-table-row .expandable-summary {
     display: flex;
     width: 100%;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 0;
+    position: relative;
 }
 
 .expandable-table-row .expandable-summary > table {
@@ -125,18 +142,40 @@ details.expandable-section[open] summary::before {
     table-layout: fixed;
 }
 
+/* Works page table: album (wide) | year/label (small); 2-column rows use full width */
 .expandable-table-row .expandable-summary table td:first-child {
-    width: 10%;
-}
-
-.expandable-table-row .expandable-summary table td:nth-child(2) {
-    width: 50%;
+    width: 55%;
+    min-width: 0;
     text-align: left;
 }
 
-.expandable-table-row .expandable-summary table td:nth-child(3) {
-    width: 30%;
+.expandable-table-row .expandable-summary table td:nth-child(2) {
+    width: 45%;
     text-align: right;
+}
+
+/* 3-column rows (with embed in table): album | year/label | embed */
+.expandable-table-row .expandable-summary table.has-embed td:first-child {
+    width: 40%;
+}
+
+.expandable-table-row .expandable-summary table.has-embed td:nth-child(2) {
+    width: 18%;
+}
+
+.expandable-table-row .expandable-summary table.has-embed td:nth-child(3) {
+    width: 42%;
+    text-align: right;
+}
+
+.expandable-table-row .expandable-summary table td.embed-cell {
+    min-width: 0;
+    vertical-align: middle;
+}
+
+.expandable-table-row .expandable-summary table td.embed-cell iframe {
+    display: block;
+    max-width: 100%;
 }
 
 .expandable-table-row .expandable-summary table td {
@@ -145,17 +184,52 @@ details.expandable-section[open] summary::before {
 }
 
 .expandable-table-row summary::before {
-    margin-left: 10px;
+    position: absolute;
+    right: 100%;
+    margin-right: 0.35em;
+    margin-left: 0;
     white-space: nowrap;
 }
 
 .expandable-content {
-    color: #999999;
-    margin-left: 20px;
+    color: #000;
+    margin-left: 0;
+    margin-bottom: 1em;
 }
 
 .expandable-content p {
     margin-top: 10px;
+}
+
+/* Album block: art left, details right (desktop) */
+.album-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1.5em;
+    margin-top: 0.5em;
+}
+
+.album-art {
+    flex-shrink: 0;
+}
+
+.album-art img {
+    display: block;
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    margin: 0;
+    float: none;
+}
+
+.album-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.album-details iframe {
+    margin-bottom: 0.5em;
 }
 
 /* Markdown content styles */
@@ -164,7 +238,7 @@ details.expandable-section[open] summary::before {
 }
 
 .markdown-content p {
-    margin-bottom: 2em;
+    margin-bottom: 1em;
 }
 
 .markdown-content h1,
@@ -186,11 +260,18 @@ details.expandable-section[open] summary::before {
     height: auto;
     display: block;
     margin: 1em 1em 1em 0em;
-  float: left;
+    float: left;
+}
+
+/* Album layout overrides the generic img float above */
+.markdown-content .album-art img {
+    max-width: 220px;
+    margin: 0;
+    float: none;
 }
 
 .markdown-content img:only-child {
-    margin: 1em auto;
+    margin: 0em auto;
 }
 
 .markdown-content table {
@@ -238,21 +319,60 @@ hr {
     border-top: 1px solid #ccc;
     margin: 2em 0;
 }
+
+/* Live page: image left, Upcoming Events table to the right on desktop */
+.markdown-content .upcoming-with-img {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5em;
+    align-items: flex-start;
+    margin-bottom: 1em;
+}
+.markdown-content .upcoming-with-img .live-upcoming-img {
+    flex: 0 0 auto;
+    max-width: 24%;
+    display: block;
+}
+.markdown-content .upcoming-with-img .upcoming-events {
+    flex: 1;
+    min-width: 200px;
+}
 .markdown-content table tr:last-child td {
     border-bottom: none;
 }
 
-/* Mobile / responsive */
+/* Mobile mode B-) */
 @media (max-width: 768px) {
     .site-nav {
         font-size: 1.25em;
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        padding-left: 20px;
+        padding-right: 20px;
+        box-sizing: border-box;
+    }
+    body {
+        padding: 20px;
+    }
+    details.expandable-section summary::before {
+        margin-left: -15px;
+        
+    }
+    /* Album layout: stack vertically, art full width */
+    .album-layout {
+        flex-direction: column;
+        gap: 1em;
     }
 
-    /* Album art full width, no margins on works page */
-    .markdown-content .expandable-content img {
+    .album-art img {
         max-width: 100%;
         width: 100%;
-        margin: 0;
-        float: none;
+    }
+    .markdown-content .upcoming-with-img {
+        flex-direction: column;
+    }
+    .markdown-content .upcoming-with-img .live-upcoming-img {
+        max-width: 100%;
+        width: 100%;
     }
 }

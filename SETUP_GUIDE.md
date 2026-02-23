@@ -1,21 +1,23 @@
 # Portfolio Setup Guide
 
-This is a customizable portfolio template built with HTML, CSS, and JavaScript. It uses **Markdown files for content management**, making it easy to update without touching HTML code.
+This is a customizable portfolio template built with HTML, CSS, and JavaScript. It uses **one page** and **HTML content files**, so you edit plain HTML to update the site—no markdown or build step.
 
 ## How It Works
 
 ### Overview
-- **HTML pages** (`index.html`, `works.html`, etc.) contain the structure and styling
-- **Markdown files** (`bio.md`, `works.md`, etc.) contain your actual content
-- **JavaScript** (`script.js`) automatically converts Markdown to HTML when the page loads
-- **CSS** (`styles.css`) handles all styling and responsive design
+- **Single page** (`index.html`) holds the layout, nav, and ellipse. All sections (bio, works, live, press, contact) are shown on this page.
+- **Content files** in the `content/` folder (`bio.html`, `works.html`, etc.) hold the HTML for each section.
+- **JavaScript** (`script.js`) loads the right content based on the URL hash (`#bio`, `#works`, …) and injects it into `#main-content`.
+- **CSS** (`styles.css`) handles styling and responsive layout.
 
 ### Content Flow
-1. Each HTML file has a `<script src="script.js" data-content="filename.md"></script>` tag
-2. When the page loads, JavaScript reads the specified `.md` file
-3. The content is converted from Markdown to HTML using the `marked` library
-4. The HTML is inserted into the page's `#main-content` div
-5. Custom JavaScript features (like expandable sections) are activated
+1. You open `index.html` or `index.html#works` (etc.).
+2. The script reads the hash (e.g. `#works`) and fetches `content/works.html`.
+3. The HTML from that file is inserted into the `#main-content` div.
+4. The nav link for the current section gets the `active` class; the page title updates.
+
+### Redirect Pages
+`works.html`, `live.html`, `press.html`, and `contact.html` are redirect pages. They send visitors to `index.html#works`, `index.html#live`, etc., so old links and bookmarks still work.
 
 ## Getting Started with Your Own Portfolio
 
@@ -26,275 +28,213 @@ cd your-portfolio
 ```
 
 ### Step 2: Customize the Navigation
-Edit the **navigation menu** that appears on every page. Find this in each HTML file:
+Edit the nav in **index.html**:
 
 ```html
 <nav class="site-nav">
-    <a href="index.html" class="active">bio</a>
-    <a href="works.html">works</a>
-    <a href="live.html">live</a>
-    <a href="press.html">press</a>
-    <a href="contact.html">contact</a>
+    <a href="#bio" class="active">bio</a>
+    <a href="#works">works</a>
+    <a href="#live">live</a>
+    <a href="#press">press</a>
+    <a href="#contact">contact</a>
 </nav>
 ```
 
 **To customize:**
-- Change link text (e.g., "bio" → "about", "works" → "portfolio")
-- Change or remove links to pages you don't need
-- Add new links if needed
-- Keep one link with `class="active"` (this highlights the current page)
+- Change link text (e.g. "bio" → "about", "works" → "portfolio").
+- Use `href="#sectionid"` for each section.
+- Add or remove links as needed.
+- The script sets `class="active"` automatically from the current hash; you only need `class="active"` on the default (e.g. bio) for the first load.
 
-### Step 3: Update Page Titles
-In each HTML file, change the `<title>` tag. For example:
+If you add a new section (e.g. Shop), add a nav link `href="#shop"` and create `content/shop.html`. Then add a redirect page `shop.html` that redirects to `index.html#shop` (see “Adding New Pages” below).
+
+### Step 3: Update the Page Title
+In **index.html**, change the `<title>`:
 
 ```html
-<!-- In index.html -->
 <title>Lynn Avery</title>
-
-<!-- Should become -->
+<!-- Change to your name -->
 <title>Jane Smith</title>
 ```
 
-### Step 4: Create Your Content in Markdown Files
-This is the easiest part! Just edit the `.md` files with your content.
+The script updates the title when switching sections (e.g. “Lynn Avery - Works”); the default is whatever you put in `index.html`.
 
-#### Basic Markdown Syntax
-- **Bold**: `**text**` → **text**
-- *Italic*: `*text*` → *text*
-- [Links](url): `[text](url)`
-- # Heading 1
-- ## Heading 2
-- ### Heading 3
-- Lists:
-  ```markdown
-  - Item 1
-  - Item 2
-  ```
-- Numbered lists:
-  ```markdown
-  1. First
-  2. Second
-  ```
+### Step 4: Edit Content (HTML)
+Edit the files in the **content/** folder. Use normal HTML: paragraphs, links, lists, images, tables, etc.
 
-#### Line Breaks
-Use two spaces at the end of a line, then press Enter:
-```markdown
-Line one  
-Line two
+**Example – content/bio.html:**
+```html
+<img src="img/me.png" alt="Photo" />
+<p>Your bio text here. Use <a href="https://example.com">links</a>, <em>emphasis</em>, <strong>bold</strong>.</p>
+<p>Another paragraph.</p>
 ```
 
-### Step 5: Add Expandable Sections (Optional)
-You can create collapsible content blocks that users can click to expand/collapse.
+**Images:** Put image files in `img/` and reference them with `src="img/filename.jpg"` (or `.png`, etc.).
 
-```markdown
-[[details]]
-[[summary]]
-Click Me to Expand
-[[/summary]]
-This content is hidden by default and expands when clicked.
-You can use **bold**, *italic*, [links](url), and other markdown here.
-[[/details]]
+**Expandable sections:** Use `<details>` and `<summary>`:
+
+```html
+<details class="expandable-section">
+  <summary class="expandable-summary">Click to expand</summary>
+  <div class="expandable-content">
+    <p>Hidden content here.</p>
+  </div>
+</details>
 ```
 
-**Visual Result:**
-- Users see: `+ Click Me to Expand`
-- When clicked: The section expands and the `+` becomes `-`
-- When clicked again: The section collapses
+On the works page, album rows use `expandable-section expandable-table-row` and a `<table>` inside `<summary>` so the layout matches the rest of the works list. You can copy the structure from `content/works.html`.
 
-### Step 6: Add Images
-Place image files in the `img/` folder, then reference them in your Markdown:
-
-```markdown
-![Alt text](img/filename.jpg)
-```
-
-**Example:**
-```markdown
-![My photo](img/profile.jpg)
-![Album cover](img/album-artwork.png)
-```
-
-### Step 7: Customize Colors and Fonts
-Edit `styles.css` to change:
+### Step 5: Customize Colors and Fonts
+Edit **styles.css**.
 
 **Colors:**
 ```css
 body {
-    color: #000;           /* Text color */
-    background: #fff;      /* Background color */
+    color: #000;
+    background: #fff;
 }
 ```
 
-**Fonts:**
-Currently uses "DM Sans" from Google Fonts. To change:
+**Fonts:** The site uses “DM Sans” from Google Fonts. To change it, update the `<link>` in **index.html** and the `font-family` in `styles.css`:
+
 ```html
-<!-- In the <head> section of HTML files, find this line: -->
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:..." rel="stylesheet">
+<!-- Change to another Google Font if you like -->
+```
 
-<!-- Replace DM+Sans with another font name, e.g., Roboto, Playfair+Display, etc. -->
-<link href="https://fonts.googleapis.com/css2?family=YOUR+FONT+NAME:..." rel="stylesheet">
-
-<!-- Then update CSS: -->
+```css
 body {
-    font-family: 'YOUR FONT NAME', sans-serif;
+    font-family: 'DM Sans', sans-serif;
 }
 ```
 
-Find fonts at [Google Fonts](https://fonts.google.com/)
+Find fonts at [Google Fonts](https://fonts.google.com/).
 
 ## File Structure
 
 ```
 your-portfolio/
-├── index.html              # Bio/About page
-├── works.html              # Portfolio/Works page
-├── live.html               # Live/Events page
-├── press.html              # Press/Media page
-├── contact.html            # Contact page
-├── bio.md                  # Content for bio page
-├── works.md                # Content for works page
-├── live.md                 # Content for live page
-├── press.md                # Content for press page
-├── contact.md              # Content for contact page
-├── styles.css              # All styling
-├── script.js               # JavaScript functionality
-├── img/                    # Folder for images
+├── index.html              # Single page (nav, ellipse, #main-content)
+├── works.html              # Redirect → index.html#works
+├── live.html               # Redirect → index.html#live
+├── press.html              # Redirect → index.html#press
+├── contact.html            # Redirect → index.html#contact
+├── content/
+│   ├── bio.html            # Bio section content
+│   ├── works.html          # Works section content
+│   ├── live.html           # Live/events section content
+│   ├── press.html          # Press section content
+│   └── contact.html        # Contact section content
+├── styles.css              # Styling
+├── script.js               # Loads content by hash, ellipse animation
+├── img/                    # Images
 │   └── [your-images]
-└── README.md               # Documentation
+└── README.md
 ```
+
+The old `.md` files (e.g. `bio.md`, `works.md`) are no longer used by the site; you can delete them if you don’t need them.
 
 ## Customizing Layout
 
-### Container Width
-The content has a maximum width. To change it, edit in `styles.css`:
+### Container width
+In **styles.css**:
 
 ```css
 .container {
-    max-width: 800px;      /* Change this value in pixels */
+    max-width: 800px;
     margin: 0 auto;
 }
 ```
 
-### Spacing and Margins
-Adjust spacing between sections in `styles.css`:
-
+### Spacing
 ```css
 .site-nav {
-    margin-bottom: 2em;    /* Space below navigation */
-    margin-top: 2em;       /* Space above navigation */
+    margin-bottom: 2em;
+    margin-top: 2em;
 }
 
 .markdown-content {
-    line-height: 1.6;      /* Space between lines (1.6 is normal) */
+    line-height: 1.6;
 }
 ```
 
-## Adding New Pages
+(The main content div still uses the class `markdown-content` for styling; the content itself is HTML.)
 
-If you want to add a new page (e.g., "Shop"):
+## Adding New Pages (Sections)
 
-1. **Create a new HTML file** (e.g., `shop.html`):
+To add a new section (e.g. “Shop”):
+
+1. **Create `content/shop.html`** with your HTML content.
+
+2. **Add a nav link in index.html:**
+   ```html
+   <a href="#shop">shop</a>
+   ```
+
+3. **Register the section in script.js** so the hash is recognized and the title works:
+   - In the `PAGES` object, add: `shop: 'shop'`.
+   - The script already loads `content/${page}.html`, so `content/shop.html` will be loaded for `#shop`.
+
+4. **Optional – redirect page** so `shop.html` works as a URL:
+   - Create `shop.html` with:
    ```html
    <!DOCTYPE html>
    <html lang="en">
    <head>
        <meta charset="UTF-8">
-       <link rel="preconnect" href="https://fonts.googleapis.com">
-       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:..." rel="stylesheet">
-       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <title>Your Name - Shop</title>
-       <link rel="stylesheet" href="styles.css">
-       <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
-       <script>
-           if (typeof marked !== 'undefined') {
-               marked.use({
-                   gfm: true,
-                   breaks: true
-               });
-           }
-       </script>
+       <meta http-equiv="refresh" content="0;url=index.html#shop">
+       <title>Redirect to Shop</title>
    </head>
-   <body>
-       <div class="container">
-           <div class="ellipse">
-               <svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
-                 <path d="M227 120C227 142.091 178.871 160 119.5 160C60.1294 160 12 142.091 12 120C12 97.9086 60.1294 80 119.5 80C178.871 80 227 97.9086 227 120Z" fill="none" />
-               </svg>
-           </div>
-           <nav class="site-nav">
-               <a href="index.html">bio</a>
-               <a href="works.html">works</a>
-               <a href="live.html">live</a>
-               <a href="press.html">press</a>
-               <a href="shop.html" class="active">shop</a>
-               <a href="contact.html">contact</a>
-           </nav>
-           <div id="main-content" class="markdown-content"></div>
-       </div>
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-       <script src="script.js" data-content="shop.md"></script>
-   </body>
+   <body><p><a href="index.html#shop">Go to Shop</a></p></body>
    </html>
    ```
 
-2. **Create a markdown file** (`shop.md`) with your content
-
-3. **Update navigation** on all other HTML files to include the new link
-
 ## Special Features
 
-### Animated Rotating Text
-The ellipse at the top displays rotating text. This is controlled by the SVG path and the animation settings in `script.js`. The text currently shows "lynn avery" and cycles continuously.
+### Animated rotating text
+The ellipse at the top shows rotating text (e.g. “lynn avery”). The path and animation are set in **script.js** and the SVG in **index.html**.
 
-### Responsive Design
-The site automatically adapts to mobile, tablet, and desktop screens. The CSS uses:
-- `max-width` to limit content width on large screens
-- `vw` and `vh` units for responsive sizing
-- Media queries for mobile optimization
+### Responsive design
+Layout adapts to screen size using `max-width`, viewport units, and media queries in **styles.css**.
 
 ## Deployment
 
-### Local Testing
-1. Open any `.html` file in your browser
-2. Changes to `.md` files will appear after refreshing the page
+### Local testing
+- Serve the folder with a local server (e.g. `python3 -m http.server 8000`) and open `http://localhost:8000` or `http://localhost:8000/index.html#works`.
+- Editing a file in `content/` and refreshing will show your changes.
 
-### Deploying Online
+### Deploying online
 
-**GitHub Pages (Free)**
-1. Push your code to a GitHub repository
-2. Go to Settings → Pages
-3. Select "Deploy from a branch" and choose `main` branch
-4. Your site will be live at `https://yourusername.github.io/repo-name`
+**GitHub Pages**
+1. Push the repo to GitHub.
+2. Settings → Pages → “Deploy from a branch” → choose `main` (or your default branch).
+3. Site will be at `https://yourusername.github.io/repo-name`.
 
-**Other Hosting**
-- Netlify, Vercel, or any static hosting service
-- Simply upload all files to your hosting provider
+**Other hosting**
+- Upload the whole folder to Netlify, Vercel, or any static host. No build step required.
 
 ## Troubleshooting
 
-**Content not showing up?**
-- Check that the markdown file name matches the `data-content` value in the script tag
-- Make sure the `.md` file is in the same folder as the `.html` files
-- Check browser console (F12) for error messages
+**Content not showing?**
+- Check the browser address bar: the hash must match a key in the `PAGES` object in `script.js` (e.g. `#works`).
+- Ensure the corresponding file exists (e.g. `content/works.html`).
+- Open the browser console (F12) for errors (e.g. 404 on the content file).
+
+**Wrong section on load?**
+- Default is `#bio`. If there’s no hash or an unknown hash, the script falls back to `bio`. Confirm the hash in the URL.
 
 **Styling looks wrong?**
-- Clear your browser cache (Ctrl+Shift+Delete or Cmd+Shift+Delete)
-- Make sure `styles.css` is in the same folder
+- Hard refresh (Ctrl+Shift+R or Cmd+Shift+R) and ensure `styles.css` is in the same directory as `index.html`.
 
 **Images not loading?**
-- Check that image paths start with `img/`
-- Make sure images are actually in the `img/` folder
-- Try refreshing the page
+- Use paths like `img/filename.jpg` from the project root. Ensure files are in the `img/` folder.
 
-**Expandable sections not working?**
-- Make sure the syntax is exactly: `[[details]]` with `[[summary]]` ... `[[/summary]]` for the heading and the rest until `[[/details]]` for the body
-- Check browser console for JavaScript errors
+**Expandable sections not opening?**
+- Use the classes `expandable-section`, `expandable-summary`, and `expandable-content` as in the examples above. Check the console for JavaScript errors.
 
-## Questions or Issues?
+## Reference
 
-Refer to the files included in this project:
-- `script.js` - Controls markdown rendering and interactive features
-- `styles.css` - All styling
-- Individual `.md` files - Content examples
-- `.html` files - Template structure
+- **script.js** – Hash-based loading, content fetch, active nav, title, ellipse animation.
+- **styles.css** – All styles, including `.expandable-section`, table layout for works.
+- **content/*.html** – Section content in plain HTML.
+- **index.html** – Single-page shell, nav, and `#main-content`.
