@@ -18,6 +18,28 @@ const __CACHE_VERSION = (function() {
 
 const PAGES = { bio: 'bio', works: 'works', live: 'live', press: 'press', contact: 'contact' };
 
+// ——— Lynn Avery ellipse glitch (symbols then decode back to letters) ———
+const GLITCH_TARGET_TEXT = "lynn avery";
+/** How often we glitch a new letter: random between min and max (ms). */
+const GLITCH_TRIGGER_INTERVAL_MIN_MS = 400;
+const GLITCH_TRIGGER_INTERVAL_MAX_MS = 1020;
+/** How long each letter stays as a symbol: random between min and max (ms). */
+const GLITCH_DURATION_MIN_MS = 10;
+const GLITCH_DURATION_MAX_MS = 800;
+/** Chance (0–1) that a glitch is a flicker (several quick symbol flashes) instead of one hold. */
+const GLITCH_FLICKER_CHANCE = 0.08;
+/** Flicker: symbol visible (ms) and gap before next flash (ms). */
+const GLITCH_FLICKER_ON_MS = 55;
+const GLITCH_FLICKER_OFF_MS = 45;
+/** Number of symbol flashes in one flicker. */
+const GLITCH_FLICKER_STEPS = 3;
+/**
+ * Symbols to show instead of letters.
+ * Keep these as single-codepoint characters so they don't change the string length
+ * (which would otherwise shift the rest of the letters along the ellipse).
+ */
+const GLITCH_SYMBOLS = ["♣"];
+
 /**
  * ellipse text
  */
@@ -65,6 +87,89 @@ const createAnimation = ({
     tweenA.progress(baseProgress);
     tweenB.progress(baseProgress);
   };
+
+/**
+ * Randomly glitch letters in the ellipse text to symbols, then decode back.
+ * Uses GLITCH_* config at top of file.
+ */
+function startEllipseGlitch(svgEl) {
+  const textPaths = svgEl && svgEl.querySelectorAll("textPath");
+  if (!textPaths || textPaths.length === 0) return;
+
+  const len = GLITCH_TARGET_TEXT.length;
+  /** For each index: null = show letter, or { symbol, until } = show symbol until time */
+  const state = Array(len).fill(null);
+
+  function pickRandomSymbol() {
+    // Prefer single-code-unit symbols so the overall string length stays constant
+    const singleUnit = GLITCH_SYMBOLS.filter(s => typeof s === "string" && s.length === 1);
+    const pool = singleUnit.length ? singleUnit : GLITCH_SYMBOLS;
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  function buildDisplayString() {
+    const now = Date.now();
+    let out = "";
+    for (let i = 0; i < len; i++) {
+      const s = state[i];
+      if (s && now < s.until) out += s.symbol;
+      else {
+        if (s) state[i] = null;
+        out += GLITCH_TARGET_TEXT[i];
+      }
+    }
+    return out;
+  }
+
+  function updateDisplay() {
+    const str = buildDisplayString();
+    textPaths.forEach((tp) => { tp.textContent = str; });
+  }
+
+  function triggerOneGlitch() {
+    const indices = [];
+    for (let i = 0; i < len; i++) {
+      if (state[i] === null && GLITCH_TARGET_TEXT[i] !== " ") indices.push(i);
+    }
+    if (indices.length > 0) {
+      const i = indices[Math.floor(Math.random() * indices.length)];
+      const isFlicker = Math.random() < GLITCH_FLICKER_CHANCE;
+
+      if (isFlicker) {
+        function doFlickerStep(step) {
+          if (step <= 0) return;
+          state[i] = {
+            symbol: pickRandomSymbol(),
+            until: Date.now() + GLITCH_FLICKER_ON_MS
+          };
+          setTimeout(() => {
+            doFlickerStep(step - 1);
+          }, GLITCH_FLICKER_ON_MS + GLITCH_FLICKER_OFF_MS);
+        }
+        doFlickerStep(GLITCH_FLICKER_STEPS);
+      } else {
+        const duration =
+          GLITCH_DURATION_MIN_MS +
+          Math.random() * (GLITCH_DURATION_MAX_MS - GLITCH_DURATION_MIN_MS);
+        state[i] = {
+          symbol: pickRandomSymbol(),
+          until: Date.now() + duration
+        };
+      }
+    }
+
+    const nextMs =
+      GLITCH_TRIGGER_INTERVAL_MIN_MS +
+      Math.random() * (GLITCH_TRIGGER_INTERVAL_MAX_MS - GLITCH_TRIGGER_INTERVAL_MIN_MS);
+    setTimeout(triggerOneGlitch, nextMs);
+  }
+
+  triggerOneGlitch();
+
+  const updateInterval = 50;
+  setInterval(updateDisplay, updateInterval);
+  updateDisplay();
+}
 
 function getPage() {
   const hash = (window.location.hash || '#bio').slice(1).toLowerCase();
@@ -115,9 +220,10 @@ document.addEventListener('DOMContentLoaded', function() {
       duration: 21,
       reversed: true,
       target: ellipseSvg,
-      text: "lynn avery",
+      text: GLITCH_TARGET_TEXT,
       textProperties: { fontSize: "2em" }
     });
+    startEllipseGlitch(ellipseSvg);
   }
 
   loadContent(getPage());

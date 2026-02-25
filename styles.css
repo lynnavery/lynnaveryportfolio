@@ -37,6 +37,9 @@ body {
 
 .ellipse svg text {
     fill: #000;
+    /* Monospaced so each character occupies a fixed-width block */
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+                 "Liberation Mono", "Courier New", monospace;
 }
 .expandable-summary:hover * {
     text-decoration: underline;
