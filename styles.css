@@ -3,24 +3,36 @@
     padding: 0;
     box-sizing: border-box;
 }
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 
-
-
-    
+/* Base */
 body {
     font-family: 'DM Sans', sans-serif;
-    line-height: 1.6;
+    font-size: 2.5em;
+    line-height: 1.5;
     color: #000;
     background: #fff;
-
-    background-size: cover;
-    z-index: 999;
     padding: 5px;
+    text-wrap: balance;
+}
 
+#main-content.page-bio,
+#main-content.page-press {
+    line-height: 1;
+}
 
+/* Layout */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
 
+hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 2em 0;
+}
 
+/* Ellipse animation */
 .ellipse {
     width: min(63vw, 63vh);
     height: min(63vw, 33vh);
@@ -29,7 +41,6 @@ body {
 }
 
 .ellipse svg {
-    transform: rotate(0deg);
     width: 100%;
     height: 100%;
     display: block;
@@ -37,26 +48,14 @@ body {
 
 .ellipse svg text {
     fill: #000;
-    /* Monospaced so each character occupies a fixed-width block */
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-                 "Liberation Mono", "Courier New", monospace;
-}
-.expandable-summary:hover * {
-    text-decoration: underline;
-}
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-
 }
 
+/* Navigation */
 .site-nav {
     display: flex;
     gap: 1em;
-    margin-bottom: 0em;
-    margin-top: 0em;
     flex-wrap: wrap;
-    font-size: 2em;
+    font-size: 0.75em;
 }
 
 .site-nav a {
@@ -64,9 +63,9 @@ body {
     text-decoration: none;
     text-transform: lowercase;
     display: inline-block;
-    /* Reserve space for bold so active state doesn’t shift neighbors */
 }
 
+/* Reserve space for bold so active state doesn't shift neighbors */
 .site-nav a::before {
     content: attr(data-text);
     font-weight: bold;
@@ -84,31 +83,26 @@ body {
     font-weight: bold;
 }
 
-h1 {
-    margin-bottom: 20px;
-}
-
-
-li::marker {
-    content: "♣ ";
-  }
+/* Expandable sections (contact, live) */
 details.expandable-section {
     margin-bottom: 15px;
 }
 
-/* Hide default details marker and use +/- instead */
 details.expandable-section summary {
     list-style: none;
     cursor: pointer;
     display: block;
     margin-bottom: 1em;
 }
+
 details.expandable-section summary::-webkit-details-marker {
     display: none;
 }
+
 details.expandable-section summary::marker {
     display: none;
 }
+
 details.expandable-section summary::before {
     content: "+";
     font-weight: bold;
@@ -116,87 +110,16 @@ details.expandable-section summary::before {
     margin-left: -15px;
     vertical-align: top;
 }
+
 details.expandable-section[open] summary::before {
     content: "-";
 }
 
-.expandable-table-group {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-}
-
-.expandable-table-row {
-    display: table-row;
-}
-
-.expandable-table-row .expandable-summary {
-    display: flex;
-    width: 100%;
-    align-items: flex-start;
-    margin-bottom: 0;
-    position: relative;
-}
-
-.expandable-table-row .expandable-summary > table {
-    flex: 1;
-    width: 0;
-    margin: 0;
-    table-layout: fixed;
-}
-
-/* Works page table: album (wide) | year/label (small); 2-column rows use full width */
-.expandable-table-row .expandable-summary table td:first-child {
-    width: 55%;
-    min-width: 0;
-    text-align: left;
-}
-
-.expandable-table-row .expandable-summary table td:nth-child(2) {
-    width: 45%;
-    text-align: right;
-}
-
-/* 3-column rows (with embed in table): album | year/label | embed */
-.expandable-table-row .expandable-summary table.has-embed td:first-child {
-    width: 40%;
-}
-
-.expandable-table-row .expandable-summary table.has-embed td:nth-child(2) {
-    width: 18%;
-}
-
-.expandable-table-row .expandable-summary table.has-embed td:nth-child(3) {
-    width: 42%;
-    text-align: right;
-}
-
-.expandable-table-row .expandable-summary table td.embed-cell {
-    min-width: 0;
-    vertical-align: middle;
-}
-
-.expandable-table-row .expandable-summary table td.embed-cell iframe {
-    display: block;
-    max-width: 100%;
-}
-
-.expandable-table-row .expandable-summary table td {
-    border: none;
-    vertical-align: top;
-}
-
-.expandable-table-row summary::before {
-    position: absolute;
-    right: 100%;
-    margin-right: 0.35em;
-    margin-left: 0;
-    white-space: nowrap;
+.expandable-summary:hover * {
+    text-decoration: underline;
 }
 
 .expandable-content {
-    color: #000;
-    margin-left: 0;
     margin-bottom: 1em;
 }
 
@@ -204,54 +127,69 @@ details.expandable-section[open] summary::before {
     margin-top: 10px;
 }
 
-/* Album block: art left, details right (desktop) */
-.album-layout {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 1.5em;
-    margin-top: 0.5em;
+/* Works grid */
+.works-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
 }
 
-.album-art {
-    flex-shrink: 0;
+.works-card-img-wrap {
+    position: relative;
+    overflow: hidden;
 }
 
-.album-art img {
+.works-card-img-wrap img {
     display: block;
     width: 100%;
-    max-width: 220px;
     height: auto;
-    margin: 0;
-    float: none;
 }
 
-.album-details {
-    flex: 1;
-    min-width: 0;
+.works-card-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 0.5em;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 0.75em;
+    transform: translateY(100%);
+    transition: transform 0.2s ease;
 }
 
-.album-details iframe {
-    margin-bottom: 0.5em;
+.works-card-info p {
+    margin-bottom: 0.4em;
 }
 
-/* Markdown content styles */
-.page-content {
-    margin-bottom: 20px;
+.works-card-info p:last-child {
+    margin-bottom: 0;
 }
 
+.works-card-info a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+.works-card:hover .works-card-info {
+    transform: translateY(0);
+}
+
+.works-card iframe {
+    display: block;
+    width: 100%;
+    border: 0;
+}
+
+.other-releases-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+/* Content area */
 .page-content p {
     margin-bottom: 1em;
 }
-
-.page-content h1,
-.page-content h2,
-.page-content h3 {
-    margin-top: 1.5em;
-    margin-bottom: 0.5em;
-}
-
-
 
 .page-content a {
     color: inherit;
@@ -259,32 +197,21 @@ details.expandable-section[open] summary::before {
 }
 
 .page-content img {
-    max-width: 30%;
     height: auto;
     display: block;
-    margin: 1em 1em 1em 0em;
+;
     float: left;
 }
 
-/* Album layout overrides the generic img float above */
-.page-content .album-art img {
-    max-width: 220px;
-    margin: 0;
-    float: none;
-}
-
-.page-content img:only-child {
-    margin: 0em auto;
+.me-img {
+    max-width: 30%;
 }
 
 .page-content table {
     width: 100%;
     border-collapse: collapse;
+}
 
-}
-.page-content table td:nth-child(3) {
-    text-align: right;
-}
 .page-content table th,
 .page-content table td {
     padding: 0;
@@ -298,85 +225,43 @@ details.expandable-section[open] summary::before {
     background-color: transparent;
 }
 
-/* Hide empty header rows */
-.page-content table thead tr:first-child th:empty,
-.page-content table thead tr:first-child th:only-child:empty,
-.page-content table tr:first-child td:empty ~ td,
-.page-content table tr:first-child th:empty ~ th {
+.page-content table td:nth-child(3) {
+    text-align: right;
+}
+
+/* Hide empty header rows in tables */
+.page-content table thead th:empty {
     display: none;
 }
 
-/* Also hide if header only contains separator characters or whitespace */
-.page-content table tr:first-child td,
-.page-content table tr:first-child th {
-    word-spacing: 0;
-}
-
-.page-content table tr:first-child td:contains(":-"),
-.page-content table tr:first-child th:contains(":-") {
-    display: none;
-}
-
-hr {
-    border: none;
-    border-top: 1px solid #ccc;
-    margin: 2em 0;
-}
-
-/* Live page: image left, Upcoming Events table to the right on desktop */
-.page-content .upcoming-with-img {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5em;
-    align-items: flex-start;
-    margin-bottom: 1em;
-}
-.page-content .upcoming-with-img .live-upcoming-img {
-    flex: 0 0 auto;
-    max-width: 24%;
-    display: block;
-}
-.page-content .upcoming-with-img .upcoming-events {
-    flex: 1;
-    min-width: 200px;
-}
 .page-content table tr:last-child td {
     border-bottom: none;
 }
 
-/* Mobile mode B-) */
+/* Mobile */
 @media (max-width: 768px) {
+    body {
+        font-size: 1.5em;
+        padding: 20px;
+    }
+
+    #main-content.page-live {
+        font-size: 0.667em;
+    }
+
     .site-nav {
-        font-size: 1.25em;
         width: 100vw;
         margin-left: calc(50% - 50vw);
         padding-left: 20px;
         padding-right: 20px;
         box-sizing: border-box;
     }
-    body {
-        padding: 20px;
-    }
+
     details.expandable-section summary::before {
         margin-left: -15px;
-        
-    }
-    /* Album layout: stack vertically, art full width */
-    .album-layout {
-        flex-direction: column;
-        gap: 1em;
     }
 
-    .album-art img {
-        max-width: 100%;
-        width: 100%;
+    .works-grid {
+        grid-template-columns: 1fr;
     }
-    .page-content .upcoming-with-img {
-        flex-direction: column;
-    }
-    .page-content .upcoming-with-img .live-upcoming-img {
-        max-width: 100%;
-        width: 100%;
-    }
-} 
 }
