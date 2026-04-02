@@ -4,6 +4,24 @@
     box-sizing: border-box;
 }
 
+@property --segment-size {
+    syntax: '<length>';
+    initial-value: 0px;
+    inherits: false;
+}
+
+@property --iris-radius {
+    syntax: '<percentage>';
+    initial-value: 100%;
+    inherits: false;
+}
+
+@property --iris-gradient-length {
+    syntax: '<length>';
+    initial-value: 60px;
+    inherits: false;
+}
+
 /* Base */
 body {
     font-family: 'DM Sans', sans-serif;
@@ -26,13 +44,55 @@ body {
     background: #fff;
     z-index: 10;
     height: min(63vw, 33vh);
+    --initial-segment-size: 20px;
+    --segment-size: 0px;
+    --iris-radius: 100%;
+    --iris-gradient-length: 60px;
+    --segment-size-half: calc(var(--segment-size) / 2);
+    mask-composite: intersect;
+    mask-image:
+        repeating-linear-gradient(to bottom,
+            transparent 0px,
+            transparent var(--segment-size-half),
+            black var(--segment-size-half),
+            black calc(var(--initial-segment-size) - var(--segment-size-half)),
+            transparent calc(var(--initial-segment-size) - var(--segment-size-half)),
+            transparent var(--initial-segment-size)
+        ),
+        repeating-linear-gradient(to right,
+            transparent 0px,
+            transparent var(--segment-size-half),
+            black var(--segment-size-half),
+            black calc(var(--initial-segment-size) - var(--segment-size-half)),
+            transparent calc(var(--initial-segment-size) - var(--segment-size-half)),
+            transparent var(--initial-segment-size)
+        ),
+        radial-gradient(
+            black,
+            black var(--iris-radius),
+            transparent calc(var(--iris-radius) + var(--iris-gradient-length)),
+            transparent
+        );
+    transition:
+        --iris-radius 2000ms cubic-bezier(0, 0.55, 0.45, 1),
+        --iris-gradient-length 2000ms cubic-bezier(0.16, 1, 0.3, 1),
+        --segment-size 2000ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.site-header.wipe-out {
+    --segment-size: 20px;
+    --iris-radius: 0%;
+    --iris-gradient-length: 0px;
 }
 
 .container {
     max-width: 1000px;
     margin: 0 auto;
     padding: 5px;
-}
+    position: relative;
+    z-index: 10;
+  background-color: white;
+  }
 
 hr {
     border: none;

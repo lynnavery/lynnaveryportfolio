@@ -127,3 +127,8 @@ document.addEventListener('DOMContentLoaded', function() {
   loadContent(getPage());
   window.addEventListener('hashchange', () => loadContent(getPage()));
 });
+window.addEventListener('scroll', () => {
+  const header = document.querySelector('.site-header');
+  header.classList.toggle('wipe-out', window.scrollY > 50);
+});
+
