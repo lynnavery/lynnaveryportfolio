@@ -11,7 +11,6 @@ body {
     line-height: 1.5;
     color: #000;
     background: #fff;
-    padding: 5px;
     text-wrap: balance;
 }
 
@@ -21,9 +20,18 @@ body {
 }
 
 /* Layout */
+.site-header {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 10;
+    height: min(63vw, 33vh);
+}
+
 .container {
     max-width: 1000px;
     margin: 0 auto;
+    padding: 5px;
 }
 
 hr {
@@ -34,10 +42,14 @@ hr {
 
 /* Ellipse animation */
 .ellipse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: min(63vw, 63vh);
     height: min(63vw, 33vh);
-    aspect-ratio: 4/7;
-    margin: -20px auto;
+    pointer-events: none;
+    z-index: 1;
 }
 
 .ellipse svg {
@@ -52,20 +64,25 @@ hr {
 
 /* Navigation */
 .site-nav {
-    display: flex;
-    gap: 1em;
-    flex-wrap: wrap;
-    font-size: 0.75em;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    height: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 5px;
 }
 
 .site-nav a {
     color: #000;
     text-decoration: none;
     text-transform: lowercase;
-    display: inline-block;
+    display: block;
+    position: relative;
+    z-index: 2;
 }
 
-/* Reserve space for bold so active state doesn't shift neighbors */
+/* Reserve space for bold so active state doesn't shift */
 .site-nav a::before {
     content: attr(data-text);
     font-weight: bold;
@@ -73,6 +90,17 @@ hr {
     height: 0;
     overflow: hidden;
     width: max-content;
+}
+
+/* Right column: right-aligned, bottom row: pushed down */
+.site-nav a:nth-child(2),
+.site-nav a:nth-child(4) {
+    justify-self: end;
+}
+
+.site-nav a:nth-child(3),
+.site-nav a:nth-child(4) {
+    align-self: end;
 }
 
 .site-nav a:hover {
@@ -242,19 +270,18 @@ details.expandable-section[open] summary::before {
 @media (max-width: 768px) {
     body {
         font-size: 1.5em;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    .site-nav {
         padding: 20px;
     }
 
     #main-content.page-live {
         font-size: 0.667em;
-    }
-
-    .site-nav {
-        width: 100vw;
-        margin-left: calc(50% - 50vw);
-        padding-left: 20px;
-        padding-right: 20px;
-        box-sizing: border-box;
     }
 
     details.expandable-section summary::before {
