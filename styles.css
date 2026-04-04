@@ -3,7 +3,7 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+/* properties for transition */
 @property --segment-size {
     syntax: '<length>';
     initial-value: 0px;
@@ -21,7 +21,7 @@
     initial-value: 60px;
     inherits: false;
 }
-
+/* END properties for transition END */
 /* Base */
 body {
     font-family: 'DM Sans', sans-serif;
