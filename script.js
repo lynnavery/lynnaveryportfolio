@@ -18,6 +18,12 @@ const __CACHE_VERSION = (function() {
 
 const PAGES = { bio: 'bio', works: 'works', live: 'live', press: 'press' };
 
+const __contentCache = {};
+// Hidden container: pages preloaded here as live DOM so iframes start loading
+const __preloadContainer = document.createElement('div');
+__preloadContainer.style.cssText = 'position:fixed;top:-9999px;width:0;height:0;overflow:hidden;visibility:hidden;pointer-events:none;';
+document.addEventListener('DOMContentLoaded', () => document.body.appendChild(__preloadContainer));
+
 const GLITCH_TARGET_TEXT = "lynn avery";
 
 /**
@@ -81,28 +87,49 @@ function setActiveNav(page) {
   });
 }
 
+async function fetchPage(page) {
+  if (__contentCache[page]) return;
+  const url = `content/${page}.html?v=${__CACHE_VERSION}`;
+  const response = await fetch(url);
+  if (!response.ok) throw new Error('Failed to load content');
+  const html = await response.text();
+
+  const wrapper = document.createElement('div');
+  wrapper.dataset.preloadPage = page;
+  wrapper.innerHTML = html;
+  wrapper.querySelectorAll('img[src]').forEach(img => { new Image().src = img.getAttribute('src'); });
+  // Insert into hidden container so iframes begin loading now
+  __preloadContainer.appendChild(wrapper);
+  __contentCache[page] = { html, wrapper };
+}
+
+function applyPage(page, mainContent) {
+  const entry = __contentCache[page];
+  mainContent.className = `page-content page-${page}`;
+
+  if (entry.wrapper.firstChild) {
+    // Move live DOM nodes — preserves iframe load state on first visit
+    mainContent.innerHTML = '';
+    while (entry.wrapper.firstChild) mainContent.appendChild(entry.wrapper.firstChild);
+  } else {
+    // Subsequent visits: browser has already cached iframe resources
+    mainContent.innerHTML = entry.html;
+  }
+
+  if (page === 'works') {
+    mainContent.querySelectorAll('details').forEach(d => d.setAttribute('open', ''));
+  }
+}
+
 async function loadContent(page) {
-  const file = `content/${page}.html`;
-  const url = `${file}?v=${__CACHE_VERSION}`;
+  const mainContent = document.getElementById('main-content');
   try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error('Failed to load content');
-    const html = await response.text();
-
-    const mainContent = document.getElementById('main-content');
-    if (mainContent) {
-      mainContent.className = `page-content page-${page}`;
-      mainContent.innerHTML = html;
-
-      if (page === 'works') {
-        mainContent.querySelectorAll('details').forEach(d => d.setAttribute('open', ''));
-      }
-    }
+    await fetchPage(page);
+    applyPage(page, mainContent);
     setActiveNav(page);
     document.title = page === 'bio' ? 'Lynn Avery' : `Lynn Avery - ${page.charAt(0).toUpperCase() + page.slice(1)}`;
   } catch (error) {
     console.error('Error loading content:', error);
-    const mainContent = document.getElementById('main-content');
     if (mainContent) mainContent.innerHTML = '<p>Error loading content.</p>';
     setActiveNav(page);
   }
@@ -124,8 +151,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 }
 
-  loadContent(getPage());
+  const currentPage = getPage();
+  loadContent(currentPage);
   window.addEventListener('hashchange', () => loadContent(getPage()));
+
+  // Preload all other pages in the background after a short delay
+  setTimeout(() => {
+    Object.keys(PAGES).filter(p => p !== currentPage).forEach(p => fetchPage(p).catch(() => {}));
+  }, 1000);
 });
 window.addEventListener('scroll', () => {
   const header = document.querySelector('.site-header');
