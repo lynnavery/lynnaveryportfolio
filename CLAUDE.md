@@ -27,19 +27,13 @@ Static single-page application with hash-based routing. No frameworks, no build 
 ## Key Files
 
 - `index.html` — shell page: SVG ellipse, nav, empty `#main-content`, GSAP import
-- `script.js` — routing, ellipse animation, glitch effect, nav state
+- `script.js` — routing, ellipse animation, nav state
 - `styles.css` — all styles; 768px breakpoint for mobile
 - `content/*.html` — page content loaded dynamically (bio, works, live, press, contact)
 
 ## Ellipse Animation
 
 GSAP 3.12.2 animates "lynn avery" text along an SVG ellipse path. Animation start timestamp is stored in `sessionStorage['animationStartTs']` so the position persists across page loads.
-
-The glitch effect randomly replaces letters with symbols (♣). Tunable constants at the top of `script.js`:
-- `GLITCH_TRIGGER_INTERVAL_MIN_MS` / `MAX_MS` — how often glitches occur
-- `GLITCH_DURATION_MIN_MS` / `MAX_MS` — how long each glitch lasts
-- `GLITCH_FLICKER_CHANCE` — probability of a flicker vs. a held substitution
-- `GLITCH_SYMBOLS` — pool of replacement characters
 
 ## Content Structure
 
@@ -48,3 +42,4 @@ The glitch effect randomly replaces letters with symbols (♣). Tunable constant
 **`content/live.html`** — two tables (upcoming / past events); past events grouped by year in `<details>` blocks.
 
 **Nav active state** — nav links use a `data-text` attribute to pre-reserve bold width and prevent layout shift when the active class is applied.
+

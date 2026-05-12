@@ -1,3 +1,8 @@
+:root {
+    --underline-thickness: 7%;
+    --underline-thickness-bold: 12%;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -30,6 +35,9 @@ body {
     color: #000;
     background: #fff;
     text-wrap: balance;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
 }
 
 #main-content.page-bio,
@@ -116,8 +124,9 @@ hr {
     width: 100%;
     height: 100%;
     display: block;
+    overflow: visible;
 }
-
+br { margin-bottom: 0.5em; }
 .ellipse svg text {
     fill: #000;
 }
@@ -165,12 +174,23 @@ hr {
 
 .site-nav a:hover {
     text-decoration: underline;
+    text-decoration-thickness: var(--underline-thickness);
+}
+
+.site-nav a.active:hover {
+    text-decoration-thickness: var(--underline-thickness-bold);
 }
 
 .site-nav a.active {
     font-weight: bold;
 }
 
+.footer {
+    margin-top: 2em;
+    background-color: white;
+    align-content: center;
+    text-align: center;
+}
 /* Expandable sections (contact, live) */
 details.expandable-section {
     margin-bottom: 15px;
@@ -256,6 +276,7 @@ details.expandable-section[open] summary::before {
 .works-card-info a {
     color: inherit;
     text-decoration: underline;
+    text-decoration-thickness: var(--underline-thickness);
 }
 
 .works-card:hover .works-card-info {
@@ -276,12 +297,21 @@ details.expandable-section[open] summary::before {
 
 /* Content area */
 .page-content p {
-    margin-bottom: 1em;
+    margin-bottom: 1.5em;
 }
 
 .page-content a {
     color: inherit;
     text-decoration: underline;
+    text-decoration-thickness: var(--underline-thickness);
+}
+
+.page-content b a,
+.page-content strong a,
+.page-content a:where(b, strong),
+b .page-content a,
+strong .page-content a {
+    text-decoration-thickness: var(--underline-thickness-bold);
 }
 
 .page-content img {
@@ -293,6 +323,7 @@ details.expandable-section[open] summary::before {
 
 .me-img {
     max-width: 30%;
+    padding: 0.13em;
 }
 
 .page-content table {
@@ -351,4 +382,17 @@ details.expandable-section[open] summary::before {
     .works-grid {
         grid-template-columns: 1fr;
     }
+
+    .me-img {
+        max-width: 100%;
+        float: none;
+        display: block;
+        padding-bottom: 1em;
+    }
 }
+
+/* typeset hanging punctuation */
+.pull-double { margin-left: -0.46em; }
+.push-double { margin-right: 0.46em; }
+.pull-single { margin-left: -0.27em; }
+.push-single { margin-right: 0.27em; }
