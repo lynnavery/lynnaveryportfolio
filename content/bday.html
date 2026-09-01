@@ -1,0 +1,177 @@
+<html>
+    <head>
+     <title>Lynns 30th Bday</title>
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        *{
+            box-sizing: border-box;
+        }
+        @font-face {
+          font-family: 'basiic';
+          src: url('basiic.ttf');
+        }
+        @font-face {
+            font-family: 'Romance';
+            src: url('RomanceA.ttf');
+        }
+        .stickers {
+            padding: 40px;
+
+        }
+         body {
+            background-color: #606C38;
+            background-image: url("starbackground.gif");
+            background-blend-mode: lighten;
+            color: white;
+            max-width: 100%;
+            height: auto;
+            font-size: 2em;
+            border-width: 2px;
+            font-family: "basiic";
+            }
+            @media (min-width:601px) {
+                body { max-width: 600px;
+                    height: auto;}
+            }
+            h1 { display: flex;
+                justify-content: center; /* Centers horizontally */
+                align-items: center;  }
+            .text{
+                border: 6px ridge #BC6C25;
+                background-color: #FEFAE0;
+                color: #283618;
+                padding: 20px;
+                display: flex;
+                flex-direction:column;
+                justify-content: center; /* Centers horizontally */
+                align-items: center;
+                text-align: center;
+                margin: 20px;
+                background-image: url("pink_mar.jpg");
+                background-blend-mode: luminosity;
+            }
+            h2 {
+                padding: none;
+                margin: none;
+                color: white;
+                text-shadow:
+                  -1px -1px 0 #000,
+                   1px -1px 0 #000,
+                  -1px  1px 0 #000,
+                   1px  1px 0 #000;
+            }
+
+            a {
+                color: #606C38;
+            }
+            p {
+
+            }
+            span {
+
+            }
+            legend {
+                background: #FEFAE0;
+                padding: 10px;
+                border: 3px inset #DDA15E;
+            }
+            .fieldset {
+                width: 100%;
+                font-family: "Romance", "Comic Sans MS", "Chalkboard SE", "Comic Neue", cursive, sans-serif;
+
+            }
+            .border {
+                background-image: url("club.gif");
+                background-repeat: repeat;
+                padding: 20px;
+            }
+            .button:hover { background: white;}
+            .button:focus{ background: BlanchedAlmond;
+            }
+            .titler{position:absolute; top:-26px;}
+            marquee {bacground:white;}
+            .grid {
+                display: flex;
+                flex-wrap:wrap;
+                gap: 4px;
+            }
+
+            .me {
+                flex: 1 1 calc(50% - 4px);
+
+                border: 4px ridge pink;
+                max-width: 280px;}
+
+            img {
+                max-width: 100%;
+                height: auto;
+            }
+            fieldset {
+                font-family: "Romance", "Comic Sans MS", "Chalkboard SE", "Comic Neue", cursive, sans-serif;
+            }
+            .text2 { color: white;
+                padding: 20px;
+            }
+            .blinkie {max-width: 150px;}
+
+        </style>
+        <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.4.0"></script>
+    </head>
+<div class="grid">
+
+<img src="dithering-effect.png" class="me"/>
+<img src="piano.png" class="me"/>
+<img src="tractor.png" class="me"/>
+<img src="dragonwagon.png" class="me"/>
+</div>
+<midi-visualizer type="piano roll" id="myVisualizer"></midi-visualizer>
+
+
+<marquee><img src="birthday-0011.gif" />come celebrate with me!<img src="birthday-0148.gif" /></marquee>
+
+<fieldset class="text"><legend style="color:black"><img src="https://blob.gifcities.org/gifcities/PKKXYWLA2YK43LR5ZWDV7BLNFEBLGNJM.gif"></legend>
+<div>
+
+    <h2>Sunday, <br/> September 13th <br />
+    7pm-Late </h2>
+    <img src="https://blob.gifcities.org/gifcities/3DBNGFBGZ6D5DM6VSMPVKIPAQMNFLWTX.gif"><br>
+    <a href="https://www.google.com/maps/place/The+Good+Fork+Pub/@40.6759676,-74.0142476,16z/data=!3m1!4b1!4m6!3m5!1s0x89c25a8930dcd3a9:0xbba3bf5c44f4369e!8m2!3d40.6759676!4d-74.0142476!16s%252Fg%252F1tdgqrgj?">the Good Fork, in Red Hook</a><br>
+    <img src="goodfork.png">
+
+
+    <br> <ul></ul>
+</fieldset>
+<div class="text">
+    <a href="https://www.easy-rsvp.com/vgu6GL-lynns-bday" style:"color: white">
+        <img src=spinning.gif />RSVP here<img src=spinning.gif />
+    </a>
+
+    <br>
+</div>
+<div class="stickers"><img src="https://blob.gifcities.org/gifcities/TF3XEOTI44GC7X4Z7HBEUZG3FZGMUS3M.gif">
+<img src="blinkiesCafe-dv.gif">
+<img src="https://cinni.net/images/web/blinkies/time.gif">
+<img src="https://cinni.net/images/web/blinkies/cn_needcoffee.gif">
+<img src="https://cinni.net/images/blinky_38.gif">
+<img src="https://blinkies.cafe/b/display/0191-fallleaves.gif" class="blinkie"></div>
+
+
+<div class="text2">
+    <img src="https://cinni.net/images/nature/spinning-sun.gif">
+    my bday is actually
+    september 9
+    <br>
+    <br>
+    if you cant make it i'm also playing these shows!
+    <br><ul>
+        <li>Sept 11 - Pianos w/ Jeff Tobias and Crying Laughing</li>
+        <li>Sept 12 - Cassette in Jadelain, with Hour</li>
+    </ul>
+    <midi-player
+      src="portal.mid" id="myPlayer"
+      sound-font visualizer="#myVisualizer" loop>
+</div>
+</midi-player>
+</body>
+<img src="https://cinni.net/images/nature/daisies2.gif">
+</html>
