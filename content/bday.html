@@ -2,6 +2,7 @@
     <head>
      <title>Lynns 30th Bday</title>
      <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="midi.css">
         <style>
         *{
             box-sizing: border-box;
@@ -14,10 +15,7 @@
             font-family: 'Romance';
             src: url('RomanceA.ttf');
         }
-        .stickers {
-            padding: 40px;
 
-        }
          body {
             background-color: #606C38;
             background-image: url("starbackground.gif");
@@ -94,15 +92,31 @@
                 display: flex;
                 flex-wrap:wrap;
                 gap: 0px;
+                padding: 10px;
+                width: 100%;
+            }
+            .child {
+                flex: 0 0 calc(50% - 5px);
+                border: 4px ridge pink;}
+            .me {
+                width: 100%;
+                height: 100%;
+            }
+            .child img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              display: block;
+            }
+            .stickers {
+                width: 100%;
+                justify-content: center; /* Centers horizontally */
+                align-items: center;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
                 padding: 20px;
             }
-
-            .me {
-                flex: 1 1 calc(50% - 4px);
-
-                border: 4px ridge pink;
-                max-width: 280px;}
-
             img {
                 max-width: 100%;
                 height: auto;
@@ -119,17 +133,21 @@
         <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.4.0"></script>
     </head>
 <div class="grid">
-<img src="dithering-effect.png" class="me"/>
-<img src="piano.png" class="me"/>
-<img src="tractor.png" class="me"/>
-<img src="dragonwagon.png" class="me"/>
+<div class="child"><img src="dithering-effect.png" class="me"/></div>
+<div class="child"><img src="tractor.png" class="me"/></div>
+
+<div class="child"><img src="piano.png" class="me"/></div>
+<div class="child"><img src="dragonwagon.png" class="me"/></div>
 <h1>Lynn's Turning 30!</h1>
 </div>
-<midi-visualizer type="piano roll" id="myVisualizer"></midi-visualizer>
-
 
 <marquee><img src="birthday-0011.gif" />come celebrate with me! drinks and food! bonfire vibes!<img src="birthday-0148.gif" /></marquee>
+<midi-player
+  src="portal.mid" id="myPlayer"
+  sound-font visualizer="#myVisualizer" loop>
 
+</midi-player>
+<midi-visualizer type="piano roll" id="myVisualizer"></midi-visualizer>
 <fieldset class="text"><legend style="color:black"><img src="https://blob.gifcities.org/gifcities/PKKXYWLA2YK43LR5ZWDV7BLNFEBLGNJM.gif"></legend>
 <div>
 
@@ -149,7 +167,8 @@
 
     <br>
 </div>
-<div class="stickers"><img src="https://blob.gifcities.org/gifcities/TF3XEOTI44GC7X4Z7HBEUZG3FZGMUS3M.gif">
+<div class="stickers">
+<img src="https://blob.gifcities.org/gifcities/TF3XEOTI44GC7X4Z7HBEUZG3FZGMUS3M.gif">
 <img src="blinkiesCafe-dv.gif">
 <img src="https://cinni.net/images/web/blinkies/time.gif">
 <img src="https://cinni.net/images/web/blinkies/cn_needcoffee.gif">
@@ -168,11 +187,8 @@
         <li>Sept 11 - Pianos w/ Jeff Tobias and Crying Laughing</li>
         <li>Sept 12 - Cassette in Jadelain, with Hour</li>
     </ul>
-    <midi-player
-      src="portal.mid" id="myPlayer"
-      sound-font visualizer="#myVisualizer" loop>
+
 </div>
-</midi-player>
 </body>
 <img src="https://cinni.net/images/nature/daisies2.gif">
 </html>
