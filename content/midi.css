@@ -1,6 +1,7 @@
 /* Custom player style */
    midi-player {
   display: block;
+  max-width: 200px;
   width: inherit;
   margin: 4px;
   margin-bottom: 0;
@@ -9,7 +10,7 @@
    midi-player::part(control-panel) {
   background: #FEFAE0;
   border: 4px inset #BC6C25;
-  border-radius: 10px 10px 0 0;
+  border-radius: 0px 0px 0 0;
 }
    midi-player::part(play-button) {
   color: #283618;
@@ -22,18 +23,21 @@
    midi-player::part(play-button):hover {
   color: #606C38;
   background-color: #FEFAE0;
+
   border-radius: 10px;
 }
    midi-player::part(time) {
-  font-family: monospace;
+
 }
 
 /* Custom visualizer style */
    midi-visualizer .piano-roll-visualizer {
-  background: #ffd;
-  border: 2px solid black;
+  background: #FEFAE0;
+  background-image: url("pink_mar.jpg");
+  background-blend-mode: luminosity;
+  border: 4px inset #BC6C25;
   border-top: none;
-  border-radius: 0 0 10px 10px;
+
   margin: 4px;
   margin-top: 0;
   overflow: auto;
@@ -46,15 +50,15 @@
   fill: #e22;
   stroke: #500;
 }
-#  midi-visualizer svg rect.note[data-instrument="2"]{
-  fill: #2ee;
+midi-visualizer svg rect.note[data-instrument="2"]{
+  fill: pink;
   stroke: #055;
 }
    midi-visualizer svg rect.note[data-is-drum="true"]{
-  fill: #888;
-  stroke: #888;
+  fill: none;
+  stroke: none;
 }
    midi-visualizer svg rect.note.active {
-  opacity: 0.9;
-  stroke: #000;
+  opacity: 1;
+  stroke: #fff;
 }

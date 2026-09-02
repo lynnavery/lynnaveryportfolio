@@ -33,7 +33,8 @@
             }
             h1 { display: flex;
                 justify-content: center; /* Centers horizontally */
-                align-items: center;  }
+                align-items: center;
+                padding:0;}
             .text{
                 border: 6px ridge #BC6C25;
                 background-color: #FEFAE0;
@@ -76,12 +77,6 @@
             .fieldset {
                 width: 100%;
                 font-family: "Romance", "Comic Sans MS", "Chalkboard SE", "Comic Neue", cursive, sans-serif;
-
-            }
-            .border {
-                background-image: url("club.gif");
-                background-repeat: repeat;
-                padding: 20px;
             }
             .button:hover { background: white;}
             .button:focus{ background: BlanchedAlmond;
@@ -91,22 +86,31 @@
             .grid {
                 display: flex;
                 flex-wrap:wrap;
-                gap: 0px;
+                gap: 8px;
                 padding: 10px;
                 width: 100%;
             }
             .child {
-                flex: 0 0 calc(50% - 5px);
-                border: 4px ridge pink;}
+                flex: 0 0 calc(50% - 4px);}
+            .grid h1 {
+                flex: 1 0 100%;
+            }
             .me {
                 width: 100%;
-                height: 100%;
+                height: auto;
             }
             .child img {
               width: 100%;
-              height: 100%;
-              object-fit: cover;
+              height: auto;
               display: block;
+                border: 4px ridge pink;
+            }
+            .player {
+                width: 100%;
+                justify-content: center; /* Centers horizontally */
+                align-items: center;
+                display: flex;
+                flex-wrap: wrap;
             }
             .stickers {
                 width: 100%;
@@ -138,16 +142,12 @@
 
 <div class="child"><img src="piano.png" class="me"/></div>
 <div class="child"><img src="dragonwagon.png" class="me"/></div>
-<h1>Lynn's Turning 30!</h1>
-</div>
-
-<marquee><img src="birthday-0011.gif" />come celebrate with me! drinks and food! bonfire vibes!<img src="birthday-0148.gif" /></marquee>
-<midi-player
+<h1>Lynn's Turning 30!</h1></div>
+<div class="player"><midi-player
   src="portal.mid" id="myPlayer"
   sound-font visualizer="#myVisualizer" loop>
-
-</midi-player>
-<midi-visualizer type="piano roll" id="myVisualizer"></midi-visualizer>
+</midi-player></div>
+<marquee><img src="birthday-0011.gif" />come celebrate with me! drinks and food! bonfire vibes!<img src="birthday-0148.gif" /></marquee>
 <fieldset class="text"><legend style="color:black"><img src="https://blob.gifcities.org/gifcities/PKKXYWLA2YK43LR5ZWDV7BLNFEBLGNJM.gif"></legend>
 <div>
 
@@ -155,7 +155,9 @@
     7pm-Late </h2>
     <img src="https://blob.gifcities.org/gifcities/3DBNGFBGZ6D5DM6VSMPVKIPAQMNFLWTX.gif"><br>
     <a href="https://www.google.com/maps/place/The+Good+Fork+Pub/@40.6759676,-74.0142476,16z/data=!3m1!4b1!4m6!3m5!1s0x89c25a8930dcd3a9:0xbba3bf5c44f4369e!8m2!3d40.6759676!4d-74.0142476!16s%252Fg%252F1tdgqrgj?">the Good Fork, in Red Hook</a><br>
-    <img src="goodfork.png">
+    <img src="goodfork.png"><br>
+        food and bevs for sale<br>
+        bonfire in the back<br>
 
 
     <br> <ul></ul>
@@ -187,6 +189,7 @@
         <li>Sept 11 - Pianos w/ Jeff Tobias and Crying Laughing</li>
         <li>Sept 12 - Cassette in Jadelain, with Hour</li>
     </ul>
+    <midi-visualizer type="piano roll" id="myVisualizer"></midi-visualizer>
 
 </div>
 </body>
