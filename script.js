@@ -19,6 +19,24 @@ const __CACHE_VERSION = (function() {
 const PAGES = { bio: 'bio', works: 'works', live: 'live', press: 'press' };
 
 const __contentCache = {};
+
+// Read a CSS color variable as a 6-digit hex (for places CSS can't reach,
+// like Bandcamp's player URL and the browser theme-color)
+function cssVarHex(name) {
+  const canvas = document.createElement('canvas');
+  canvas.width = canvas.height = 1;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue(name).trim() || '#000';
+  ctx.fillRect(0, 0, 1, 1);
+  return Array.from(ctx.getImageData(0, 0, 1, 1).data.slice(0, 3))
+    .map(n => n.toString(16).padStart(2, '0')).join('');
+}
+
+let __tones = null;
+function tones() {
+  if (!__tones) __tones = { ink: cssVarHex('--ink'), paper: cssVarHex('--paper') };
+  return __tones;
+}
 const __fetchPromises = {};
 
 /**
@@ -67,6 +85,14 @@ const createAnimation = ({
     const baseProgress = ((elapsedSeconds % duration) / duration + 1) % 1;
     tweenA.progress(baseProgress);
     tweenB.progress(baseProgress);
+
+    // Respect reduced motion: hold the name still
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const syncMotion = () => {
+      [tweenA, tweenB].forEach(t => reduceMotion.matches ? t.pause() : t.resume());
+    };
+    syncMotion();
+    reduceMotion.addEventListener('change', syncMotion);
   };
 
 
@@ -76,9 +102,12 @@ function getPage() {
 }
 
 function setActiveNav(page) {
-  document.querySelectorAll('.site-nav a').forEach(a => {
+  document.querySelectorAll('.site-nav a, .mini-nav a').forEach(a => {
     const href = (a.getAttribute('href') || '').slice(1).toLowerCase();
-    a.classList.toggle('active', href === page);
+    const isCurrent = href === page;
+    a.classList.toggle('active', isCurrent);
+    if (isCurrent) a.setAttribute('aria-current', 'page');
+    else a.removeAttribute('aria-current');
   });
 }
 
@@ -94,11 +123,25 @@ async function fetchPage(page) {
       wrapper.dataset.preloadPage = page;
       wrapper.style.display = 'none';
       wrapper.innerHTML = html;
-      wrapper.querySelectorAll('img[src]').forEach(img => { new Image().src = img.getAttribute('src'); });
+      // Bandcamp players take their colors from the URL. Links follow --ink;
+      // the player box only comes in light or dark, so pick the one nearer --paper.
+      const { ink, paper } = tones();
+      const paperIsDark = parseInt(paper.slice(0, 2), 16) * 0.299
+        + parseInt(paper.slice(2, 4), 16) * 0.587
+        + parseInt(paper.slice(4, 6), 16) * 0.114 < 128;
+      wrapper.querySelectorAll('iframe[src*="bandcamp.com/EmbeddedPlayer"]').forEach(f => {
+        f.setAttribute('src', f.getAttribute('src')
+          .replace(/bgcol=[0-9a-f]{6}/i, `bgcol=${paperIsDark ? '333333' : 'ffffff'}`)
+          .replace(/linkcol=[0-9a-f]{6}/i, `linkcol=${ink}`));
+      });
       const mc = document.getElementById('main-content');
       if (mc) mc.appendChild(wrapper);
       __contentCache[page] = { html, wrapper };
-    })();
+    })().catch(err => {
+      // forget the failed attempt so "try again" really refetches
+      delete __fetchPromises[page];
+      throw err;
+    });
   }
   return __fetchPromises[page];
 }
@@ -112,31 +155,45 @@ function applyPage(page, mainContent) {
     w.style.display = w.dataset.preloadPage === page ? '' : 'none';
   });
 
-  if (page === 'works') {
-    entry.wrapper.querySelectorAll('details').forEach(d => d.setAttribute('open', ''));
-  }
   if (!entry.typeset && typeof typeset === 'function') {
     typeset('[data-preload-page="' + page + '"]');
     entry.typeset = true;
   }
 }
 
-async function loadContent(page) {
+async function loadContent(page, { focus = false } = {}) {
   const mainContent = document.getElementById('main-content');
+  const status = document.getElementById('load-status');
+  setActiveNav(page);
+  if (status) status.textContent = '';
+  // Only say "loading" if it's actually slow
+  const slow = setTimeout(() => {
+    if (status) status.textContent = 'loading…';
+    mainContent.setAttribute('aria-busy', 'true');
+  }, 400);
   try {
     await fetchPage(page);
+    if (page !== getPage()) return; // visitor already moved on
     applyPage(page, mainContent);
-    setActiveNav(page);
+    if (status) status.textContent = '';
     document.title = page === 'bio' ? 'Lynn Avery' : `Lynn Avery - ${page.charAt(0).toUpperCase() + page.slice(1)}`;
+    if (focus) mainContent.focus({ preventScroll: true });
   } catch (error) {
     console.error('Error loading content:', error);
-    if (mainContent) mainContent.innerHTML = '<p>Error loading content.</p>';
-    setActiveNav(page);
+    if (page !== getPage()) return;
+    mainContent.querySelectorAll('[data-preload-page]').forEach(w => { w.style.display = 'none'; });
+    if (status) status.innerHTML = 'couldn\'t load this page. <button type="button" class="retry">try again</button> or write to <a href="mailto:lynn@pleasecalltobook.com">lynn@pleasecalltobook.com</a>';
+  } finally {
+    clearTimeout(slow);
+    mainContent.removeAttribute('aria-busy');
   }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('.site-nav a').forEach(a => {
+  const themeColor = document.querySelector('meta[name="theme-color"]');
+  if (themeColor) themeColor.content = `#${tones().paper}`;
+
+  document.querySelectorAll('.site-nav a, .mini-nav a').forEach(a => {
     a.setAttribute('data-text', a.textContent);
   });
 
@@ -153,15 +210,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const currentPage = getPage();
   loadContent(currentPage);
-  window.addEventListener('hashchange', () => loadContent(getPage()));
+  window.addEventListener('hashchange', () => loadContent(getPage(), { focus: true }));
 
   // Preload all other pages in the background after a short delay
   setTimeout(() => {
     Object.keys(PAGES).filter(p => p !== currentPage).forEach(p => fetchPage(p).catch(() => {}));
   }, 1000);
 });
+// A compact nav slides in when scrolling back up past the header
+let __lastScrollY = window.scrollY;
 window.addEventListener('scroll', () => {
   const header = document.querySelector('.site-header');
-  header.classList.toggle('wipe-out', window.scrollY > 50);
+  const miniNav = document.querySelector('.mini-nav');
+  const y = window.scrollY;
+  if (miniNav) {
+    if (y < header.offsetHeight) miniNav.classList.remove('shown');
+    else if (y < __lastScrollY - 4) miniNav.classList.add('shown');
+    else if (y > __lastScrollY + 4) miniNav.classList.remove('shown');
+    // hidden nav stays out of the tab order and away from screen readers
+    miniNav.inert = !miniNav.classList.contains('shown');
+  }
+  __lastScrollY = y;
+}, { passive: true });
+
+document.addEventListener('click', e => {
+  if (e.target.closest('.retry')) {
+    loadContent(getPage(), { focus: true });
+    return;
+  }
+  if (!e.target.closest('.to-top')) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
 });
 

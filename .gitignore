@@ -1,3 +1,11 @@
 backup/
 CLAUDE.md
 .mcp.json
+
+# impeccable
+PRODUCT.md
+DESIGN.md
+DESIGN.*
+.impeccable/
+
+.DS_Store

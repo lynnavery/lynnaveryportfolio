@@ -68,9 +68,7 @@
       var result = smartQuotes(text);
       var first = isLineStart(node);
       if (first) {
-        console.log('first-in-block:', JSON.stringify(text.slice(0, 40)));
         result = hangingPunct(result);
-        console.log('after hang:', result.slice(0, 60));
       }
       if (result !== text) replaceTextNode(node, result);
     }

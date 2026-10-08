@@ -2,41 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script>
-      (function(){ var n=function(){}; var i=function(s){ return s!=null?String(s):''; }; window.marked=window.marked||{ use:n, parse:i, parseInline:i, setOptions:n, getDefaults:function(){ return {}; } }; })();
-    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lynn Avery is a musician, improviser, composer, and artist based in Brooklyn, NY. Projects include Iceblink and Pink Must.">
+    <meta property="og:title" content="Lynn Avery">
+    <meta property="og:description" content="Musician, improviser, composer, and artist based in Brooklyn, NY. Iceblink, Pink Must, Lynn Avery &amp; Cole Pulice.">
+    <meta property="og:type" content="website">
     <meta name="theme-color" content="#ffffff">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <link rel="icon" href="favicon.png" sizes="any" type="image/png">
     <title>Lynn Avery</title>
-    <link rel="stylesheet" href="styles.css?v=1">
+    <link rel="stylesheet" href="styles.css?v=10">
 </head>
 <body>
     <header class="site-header">
-        <nav class="site-nav">
+        <h1 class="visually-hidden">Lynn Avery</h1>
+        <nav class="site-nav" aria-label="main">
             <a href="#bio" class="active">bio</a>
             <a href="#works">works</a>
             <a href="#live">live</a>
             <a href="#press">press</a>
         </nav>
         <div class="ellipse">
-            <svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
               <path d="M227 120C227 142.091 178.871 160 119.5 160C60.1294 160 12 142.091 12 120C12 97.9086 60.1294 80 119.5 80C178.871 80 227 97.9086 227 120Z" fill="none" />
             </svg>
         </div>
     </header>
+    <nav class="mini-nav" aria-label="sections" inert>
+        <a href="#bio">bio</a>
+        <a href="#works">works</a>
+        <a href="#live">live</a>
+        <a href="#press">press</a>
+    </nav>
     <div class="container">
-        <div id="main-content" class="page-content"></div>
+        <p id="load-status" class="load-status" role="status" aria-live="polite"></p>
+        <main id="main-content" class="page-content" tabindex="-1"></main>
+        <noscript><p>this site needs javascript to load its pages. booking: <a href="mailto:lynn@pleasecalltobook.com">lynn@pleasecalltobook.com</a> (US), <a href="mailto:spike@spikefern.com">spike@spikefern.com</a> (EU/ROW)</p></noscript>
     </div>
     <div class="footer">
-			<p>♣︎</p>
+			<button type="button" class="to-top" aria-label="back to top">♣︎</button>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="vendor/typeset.js"></script>
-    <script src="script.js?v=1"></script>
+<script src="vendor/typeset.js?v=2"></script>
+    <script src="script.js?v=9"></script>
 </body>
 </html>

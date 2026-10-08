@@ -42,4 +42,3 @@ GSAP 3.12.2 animates "lynn avery" text along an SVG ellipse path. Animation star
 **`content/live.html`** — two tables (upcoming / past events); past events grouped by year in `<details>` blocks.
 
 **Nav active state** — nav links use a `data-text` attribute to pre-reserve bold width and prevent layout shift when the active class is applied.
-
