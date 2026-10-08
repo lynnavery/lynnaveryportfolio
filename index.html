@@ -10,13 +10,24 @@
     <meta property="og:title" content="Lynn Avery">
     <meta property="og:description" content="Musician, improviser, composer, and artist based in Brooklyn, NY. Iceblink, Pink Must, Lynn Avery &amp; Cole Pulice.">
     <meta property="og:type" content="website">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#385b32">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <link rel="icon" href="favicon.png" sizes="any" type="image/png">
     <title>Lynn Avery</title>
-    <link rel="stylesheet" href="styles.css?v=10">
+    <link rel="stylesheet" href="styles.css?v=11">
 </head>
 <body>
+    <!-- duotone filter for the portrait; colors filled in from --ink / --paper -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+        <filter id="duotone" color-interpolation-filters="sRGB">
+            <feColorMatrix type="saturate" values="0" />
+            <feComponentTransfer>
+                <feFuncR type="table" tableValues="0 1" />
+                <feFuncG type="table" tableValues="0 1" />
+                <feFuncB type="table" tableValues="0 1" />
+            </feComponentTransfer>
+        </filter>
+    </svg>
     <header class="site-header">
         <h1 class="visually-hidden">Lynn Avery</h1>
         <nav class="site-nav" aria-label="main">
@@ -47,6 +58,6 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="vendor/typeset.js?v=2"></script>
-    <script src="script.js?v=9"></script>
+    <script src="script.js?v=10"></script>
 </body>
 </html>

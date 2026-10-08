@@ -1,9 +1,8 @@
 :root {
     /* The two tones. Change these and the whole site follows,
-       including the Bandcamp players and the portrait.
-       Keep --paper the lighter of the two for the portrait duotone. */
-    --ink: #000;
-    --paper: #fff;
+       including the Bandcamp players and the portrait. */
+    --ink: #fff;
+    --paper: #385b32;
 
     /* Hairlines are a light mix of the two tones, not a third color */
     --rule: color-mix(in srgb, var(--ink) 22%, var(--paper));
@@ -481,29 +480,17 @@ strong .page-content a {
     padding: 0.13em;
 }
 
-/* Portrait in the two tones: black prints as --ink, white as --paper */
+/* Portrait in the two tones: shadows print in the darker tone,
+   highlights in the lighter one (filter tables set in script.js) */
 .duotone {
     display: block;
     float: left;
-    position: relative;
-    background: var(--paper);
-    isolation: isolate;
 }
 
 .duotone img {
     float: none;
     width: 100%;
-    filter: grayscale(1);
-    mix-blend-mode: multiply;
-}
-
-.duotone::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: var(--ink);
-    mix-blend-mode: lighten;
-    pointer-events: none;
+    filter: url(#duotone);
 }
 
 .page-content table {

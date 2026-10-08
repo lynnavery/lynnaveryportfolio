@@ -193,6 +193,18 @@ document.addEventListener('DOMContentLoaded', function() {
   const themeColor = document.querySelector('meta[name="theme-color"]');
   if (themeColor) themeColor.content = `#${tones().paper}`;
 
+  // Portrait duotone: map black to the darker tone and white to the lighter one,
+  // so the photo never turns into a negative whichever way round the tones are
+  const lum = hex => [0, 2, 4].map(i => parseInt(hex.slice(i, i + 2), 16))
+    .reduce((sum, c, i) => sum + c * [0.299, 0.587, 0.114][i], 0);
+  const [dark, light] = [tones().ink, tones().paper].sort((a, b) => lum(a) - lum(b));
+  ['R', 'G', 'B'].forEach((ch, i) => {
+    const fn = document.querySelector(`#duotone feFunc${ch}`);
+    const d = parseInt(dark.slice(i * 2, i * 2 + 2), 16) / 255;
+    const l = parseInt(light.slice(i * 2, i * 2 + 2), 16) / 255;
+    if (fn) fn.setAttribute('tableValues', `${d.toFixed(3)} ${l.toFixed(3)}`);
+  });
+
   document.querySelectorAll('.site-nav a, .mini-nav a').forEach(a => {
     a.setAttribute('data-text', a.textContent);
   });
